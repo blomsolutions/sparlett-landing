@@ -3,7 +3,7 @@ import Link from "next/link";
 import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
-  title: "GDPR — Dine rettigheter — Sparlett.no",
+  title: "GDPR — Dine rettigheter",
   description:
     "Informasjon om dine rettigheter under GDPR (EUs personvernforordning) når du bruker Sparlett.no.",
 };

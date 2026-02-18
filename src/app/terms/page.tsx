@@ -3,7 +3,7 @@ import Link from "next/link";
 import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
-  title: "Vilkår for bruk — Sparlett.no",
+  title: "Vilkår for bruk",
   description:
     "Vilkår for bruk av Sparlett.no, en AI-drevet personlig økonomiassistent levert av BLOM SOLUTIONS.",
 };

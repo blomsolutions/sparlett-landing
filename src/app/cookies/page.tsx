@@ -3,7 +3,7 @@ import Link from "next/link";
 import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
-  title: "Cookie-erklæring — Sparlett.no",
+  title: "Cookie-erklæring",
   description:
     "Cookie-erklæring for Sparlett.no. Les om hvordan vi bruker informasjonskapsler og lignende teknologier.",
 };

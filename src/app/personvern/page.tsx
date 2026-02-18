@@ -3,7 +3,7 @@ import Link from "next/link";
 import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
-  title: "Personvernerklæring — Sparlett.no",
+  title: "Personvernerklæring",
   description:
     "Personvernerklæring for Sparlett.no. Les om hvordan vi samler inn, bruker og beskytter dine personopplysninger.",
 };

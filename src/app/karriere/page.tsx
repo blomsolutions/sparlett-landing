@@ -3,7 +3,7 @@ import Link from "next/link";
 import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
-  title: "Karriere — Sparlett.no",
+  title: "Karriere",
   description:
     "Bli med på laget! Se ledige stillinger og muligheter hos Sparlett.no.",
 };

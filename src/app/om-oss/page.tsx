@@ -4,7 +4,7 @@ import SubpageLayout from "@/components/SubpageLayout";
 import OmOssContactForm from "./OmOssContactForm";
 
 export const metadata: Metadata = {
-  title: "Om oss — Sparlett.no",
+  title: "Om oss",
   description:
     "Lær mer om Sparlett.no og teamet bak Norges smarteste økonomiapp.",
 };
