@@ -118,7 +118,7 @@ export default function Pricing() {
             </ul>
 
             <a
-              href="#start"
+              href="https://app.sparlett.no"
               className="block w-full rounded-xl bg-accent py-3.5 text-center font-medium text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent-hover"
             >
               Kom i gang — helt gratis

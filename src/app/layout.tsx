@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     title: "Sparlett.no — Spar smartere. Lev friere.",
     description:
       "Din personlige AI-drevne økonomiassistent. Sparlett.no gjør kompleks økonomi enkel, visuell og motiverende.",
-    url: "https://sparelett.no",
+    url: "https://sparlett.no",
     siteName: "Sparlett.no",
     locale: "nb_NO",
     type: "website",

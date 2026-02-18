@@ -13,9 +13,9 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden pt-24">
       {/* Background glow effects */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-accent/5 blur-[120px]" />
-        <div className="absolute right-0 top-1/3 h-[400px] w-[400px] rounded-full bg-ai/5 blur-[100px]" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-1/2 top-0 h-[600px] w-full max-w-[800px] -translate-x-1/2 rounded-full bg-accent/5 blur-[120px]" />
+        <div className="absolute right-1/4 top-1/3 h-[300px] w-[300px] rounded-full bg-ai/5 blur-[100px]" />
       </div>
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-20 pt-20 lg:pt-32">
@@ -32,7 +32,7 @@ export default function Hero() {
 
         {/* Main headline */}
         <h1
-          className={`mb-6 max-w-4xl text-center text-5xl font-bold leading-tight tracking-tight transition-all delay-100 duration-700 md:text-6xl lg:text-7xl ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+          className={`mb-6 max-w-4xl text-center text-4xl font-bold leading-tight tracking-tight transition-all delay-100 duration-700 sm:text-5xl md:text-6xl lg:text-7xl ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
         >
           Sparingen din,{" "}
           <span className="gradient-text">endelig enkel.</span>

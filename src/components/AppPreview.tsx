@@ -42,12 +42,12 @@ export default function AppPreview() {
         <div className="h-3 w-3 rounded-full bg-yellow-500/60" />
         <div className="h-3 w-3 rounded-full bg-green-500/60" />
         <div className="ml-4 flex-1 rounded-lg bg-background/50 px-4 py-1 text-center text-xs text-muted">
-          sparelett.no/app
+          sparlett.no/app
         </div>
       </div>
 
       {/* App content */}
-      <div className="rounded-xl bg-background p-6">
+      <div className="rounded-xl bg-background p-3 sm:p-6">
         <div className="grid gap-6 md:grid-cols-2">
           {/* Left: Stats */}
           <div className="space-y-4">

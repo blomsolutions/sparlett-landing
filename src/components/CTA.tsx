@@ -18,9 +18,9 @@ export default function CTA() {
   }, []);
 
   return (
-    <section id="start" className="relative py-24" ref={ref}>
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 blur-[150px]" />
+    <section id="start" className="relative overflow-hidden py-24" ref={ref}>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute left-1/2 top-1/2 h-[500px] w-full max-w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 blur-[150px]" />
       </div>
 
       <div className="relative mx-auto max-w-3xl px-6 text-center">

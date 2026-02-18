@@ -18,9 +18,9 @@ export default function LumiSection() {
   }, []);
 
   return (
-    <section id="lumi" className="relative py-24" ref={ref}>
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute right-0 top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-ai/5 blur-[150px]" />
+    <section id="lumi" className="relative overflow-hidden py-24" ref={ref}>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute right-0 top-1/2 h-[400px] w-[400px] -translate-y-1/2 translate-x-1/4 rounded-full bg-ai/5 blur-[150px]" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
@@ -42,13 +42,13 @@ export default function LumiSection() {
                 <div className="animate-orb-pulse h-32 w-32 rounded-full bg-gradient-to-br from-ai via-ai-light to-purple-300 shadow-2xl shadow-ai/50" />
 
                 {/* Floating data points */}
-                <div className="absolute -right-4 top-8 animate-float rounded-xl border border-ai/20 bg-surface/90 px-3 py-2 backdrop-blur-sm">
+                <div className="absolute right-0 top-8 hidden animate-float rounded-xl border border-ai/20 bg-surface/90 px-3 py-2 backdrop-blur-sm sm:block">
                   <p className="text-xs text-ai-light">Matbudsjett</p>
                   <p className="text-sm font-bold text-white">-12% denne uka</p>
                 </div>
 
                 <div
-                  className="animate-float absolute -left-4 bottom-12 rounded-xl border border-accent/20 bg-surface/90 px-3 py-2 backdrop-blur-sm"
+                  className="animate-float absolute left-0 bottom-12 hidden rounded-xl border border-accent/20 bg-surface/90 px-3 py-2 backdrop-blur-sm sm:block"
                   style={{ animationDelay: "2s" }}
                 >
                   <p className="text-xs text-accent">Sparemål</p>
@@ -56,7 +56,7 @@ export default function LumiSection() {
                 </div>
 
                 <div
-                  className="animate-float absolute -top-2 left-8 rounded-xl border border-green-500/20 bg-surface/90 px-3 py-2 backdrop-blur-sm"
+                  className="animate-float absolute -top-2 left-8 hidden rounded-xl border border-green-500/20 bg-surface/90 px-3 py-2 backdrop-blur-sm sm:block"
                   style={{ animationDelay: "4s" }}
                 >
                   <p className="text-xs text-green-400">Trend</p>
