@@ -1,15 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  // On subpages, anchor links need to point to /#section
+  const prefix = isHome ? "" : "/";
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <a href="#" className="flex items-center">
+        <Link href="/" className="flex items-center">
           <Image
             src="/Horizontal_logo_white.svg"
             alt="Sparlett.no"
@@ -17,29 +24,29 @@ export default function Navbar() {
             height={36}
             className="h-8 w-auto"
           />
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-8 md:flex">
           <a
-            href="#funksjoner"
+            href={`${prefix}#funksjoner`}
             className="text-sm text-muted transition-colors hover:text-white"
           >
             Funksjoner
           </a>
           <a
-            href="#lumi"
+            href={`${prefix}#lumi`}
             className="text-sm text-muted transition-colors hover:text-white"
           >
             Lumi AI
           </a>
           <a
-            href="#priser"
+            href={`${prefix}#priser`}
             className="text-sm text-muted transition-colors hover:text-white"
           >
             Priser
           </a>
           <a
-            href="#kontakt"
+            href={`${prefix}#kontakt`}
             className="text-sm text-muted transition-colors hover:text-white"
           >
             Kontakt
@@ -73,28 +80,28 @@ export default function Navbar() {
         <div className="border-t border-border/50 bg-background/95 backdrop-blur-xl md:hidden">
           <div className="flex flex-col gap-4 px-6 py-6">
             <a
-              href="#funksjoner"
+              href={`${prefix}#funksjoner`}
               className="text-muted transition-colors hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
               Funksjoner
             </a>
             <a
-              href="#lumi"
+              href={`${prefix}#lumi`}
               className="text-muted transition-colors hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
               Lumi AI
             </a>
             <a
-              href="#priser"
+              href={`${prefix}#priser`}
               className="text-muted transition-colors hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
               Priser
             </a>
             <a
-              href="#kontakt"
+              href={`${prefix}#kontakt`}
               className="text-muted transition-colors hover:text-white"
               onClick={() => setMobileOpen(false)}
             >
