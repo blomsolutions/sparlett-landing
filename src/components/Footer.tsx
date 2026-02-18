@@ -79,10 +79,10 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: "Personvern", href: "#" },
+                { label: "Personvern", href: "/personvern" },
                 { label: "Vilkår", href: "/terms" },
-                { label: "Cookies", href: "#" },
-                { label: "GDPR", href: "#" },
+                { label: "Cookies", href: "/cookies" },
+                { label: "GDPR", href: "/gdpr" },
               ].map((item) => (
                 <li key={item.label}>
                   <a

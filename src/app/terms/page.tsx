@@ -19,6 +19,11 @@ export default function TermsPage() {
           >
             &larr; Tilbake til forsiden
           </Link>
+          <div className="flex gap-4 text-sm text-muted">
+            <Link href="/personvern" className="transition-colors hover:text-white">Personvern</Link>
+            <Link href="/cookies" className="transition-colors hover:text-white">Cookies</Link>
+            <Link href="/gdpr" className="transition-colors hover:text-white">GDPR</Link>
+          </div>
         </div>
       </header>
 
@@ -420,14 +425,14 @@ export default function TermsPage() {
           </section>
         </div>
 
-        {/* Bottom navigation */}
-        <div className="mt-16 border-t border-border pt-8">
-          <Link
-            href="/"
-            className="text-sm text-accent transition-colors hover:text-accent-hover"
-          >
+        <div className="mt-16 border-t border-border pt-8 flex flex-wrap gap-4">
+          <Link href="/" className="text-sm text-accent transition-colors hover:text-accent-hover">
             &larr; Tilbake til forsiden
           </Link>
+          <span className="text-sm text-border">|</span>
+          <Link href="/personvern" className="text-sm text-muted transition-colors hover:text-white">Personvern</Link>
+          <Link href="/cookies" className="text-sm text-muted transition-colors hover:text-white">Cookies</Link>
+          <Link href="/gdpr" className="text-sm text-muted transition-colors hover:text-white">GDPR</Link>
         </div>
       </main>
     </div>
