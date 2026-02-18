@@ -153,7 +153,6 @@ export default function Contact() {
                 <div>
                   <p className="text-sm text-muted">Selskap</p>
                   <p className="font-medium text-white">BLOM SOLUTIONS</p>
-                  <p className="text-sm text-muted">Org.nr: 834 411 342</p>
                 </div>
               </div>
             </div>

@@ -42,7 +42,7 @@ export default function AppPreview() {
         <div className="h-3 w-3 rounded-full bg-yellow-500/60" />
         <div className="h-3 w-3 rounded-full bg-green-500/60" />
         <div className="ml-4 flex-1 rounded-lg bg-background/50 px-4 py-1 text-center text-xs text-muted">
-          sparlett.no/app
+          app.sparlett.no
         </div>
       </div>
 
