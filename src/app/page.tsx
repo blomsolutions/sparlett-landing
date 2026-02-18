@@ -4,6 +4,7 @@ import Features from "@/components/Features";
 import LumiSection from "@/components/LumiSection";
 import Pricing from "@/components/Pricing";
 import CTA from "@/components/CTA";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
         <LumiSection />
         <Pricing />
         <CTA />
+        <Contact />
       </main>
       <Footer />
     </>

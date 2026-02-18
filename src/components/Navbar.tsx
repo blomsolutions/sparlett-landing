@@ -39,6 +39,12 @@ export default function Navbar() {
             Priser
           </a>
           <a
+            href="#kontakt"
+            className="text-sm text-muted transition-colors hover:text-white"
+          >
+            Kontakt
+          </a>
+          <a
             href="https://app.sparlett.no"
             className="rounded-xl bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
           >
@@ -86,6 +92,13 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
             >
               Priser
+            </a>
+            <a
+              href="#kontakt"
+              className="text-muted transition-colors hover:text-white"
+              onClick={() => setMobileOpen(false)}
+            >
+              Kontakt
             </a>
             <a
               href="https://app.sparlett.no"

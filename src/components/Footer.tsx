@@ -19,9 +19,14 @@ export default function Footer() {
             <p className="mb-4 text-sm leading-relaxed text-muted">
               Spar smartere. Lev friere.
             </p>
-            <p className="text-sm text-muted/60">
-              Din økonomi, forklart av AI.
-            </p>
+            <div className="space-y-1.5 text-sm text-muted/60">
+              <a href="mailto:kontakt@sparlett.no" className="block transition-colors hover:text-white">
+                kontakt@sparlett.no
+              </a>
+              <a href="tel:+4790790093" className="block transition-colors hover:text-white">
+                +47 907 90 093
+              </a>
+            </div>
           </div>
 
           {/* Product */}
@@ -49,13 +54,18 @@ export default function Footer() {
               Selskap
             </h4>
             <ul className="space-y-3">
-              {["Om oss", "Blogg", "Karriere", "Kontakt"].map((item) => (
-                <li key={item}>
+              {[
+                { label: "Om oss", href: "#" },
+                { label: "Blogg", href: "#" },
+                { label: "Karriere", href: "#" },
+                { label: "Kontakt", href: "#kontakt" },
+              ].map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-sm text-muted transition-colors hover:text-white"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
