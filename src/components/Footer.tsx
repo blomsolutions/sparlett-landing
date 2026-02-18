@@ -68,13 +68,18 @@ export default function Footer() {
               Juridisk
             </h4>
             <ul className="space-y-3">
-              {["Personvern", "Vilkår", "Cookies", "GDPR"].map((item) => (
-                <li key={item}>
+              {[
+                { label: "Personvern", href: "#" },
+                { label: "Vilkår", href: "/terms" },
+                { label: "Cookies", href: "#" },
+                { label: "GDPR", href: "#" },
+              ].map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-sm text-muted transition-colors hover:text-white"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
