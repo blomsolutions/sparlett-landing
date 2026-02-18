@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
   title: "Blogg — Sparlett.no",
@@ -10,27 +10,7 @@ export const metadata: Metadata = {
 
 export default function BloggPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/Horizontal_logo_white.svg"
-              alt="Sparlett.no"
-              width={130}
-              height={30}
-              className="h-7 w-auto"
-            />
-          </Link>
-          <Link
-            href="/"
-            className="text-sm text-muted transition-colors hover:text-white"
-          >
-            &larr; Tilbake til forsiden
-          </Link>
-        </div>
-      </header>
-
+    <SubpageLayout>
       <main className="mx-auto max-w-4xl px-6 py-16">
         <h1 className="mb-4 text-4xl font-bold tracking-tight">Blogg</h1>
         <p className="mb-12 text-lg text-muted">
@@ -56,19 +36,6 @@ export default function BloggPage() {
           </Link>
         </div>
       </main>
-
-      <footer className="border-t border-border bg-surface/30">
-        <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
-          <p className="text-sm text-muted/60">
-            &copy; {new Date().getFullYear()} Sparlett.no
-          </p>
-          <div className="flex gap-6 text-sm text-muted">
-            <Link href="/" className="transition-colors hover:text-white">Hjem</Link>
-            <Link href="/personvern" className="transition-colors hover:text-white">Personvern</Link>
-            <Link href="/terms" className="transition-colors hover:text-white">Vilkår</Link>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </SubpageLayout>
   );
 }

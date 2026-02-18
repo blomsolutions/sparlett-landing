@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
   title: "Personvernerklæring — Sparlett.no",
@@ -9,23 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
-          <Link
-            href="/"
-            className="text-sm text-muted transition-colors hover:text-white"
-          >
-            &larr; Tilbake til forsiden
-          </Link>
-          <div className="flex gap-4 text-sm text-muted">
-            <Link href="/terms" className="transition-colors hover:text-white">Vilkår</Link>
-            <Link href="/cookies" className="transition-colors hover:text-white">Cookies</Link>
-            <Link href="/gdpr" className="transition-colors hover:text-white">GDPR</Link>
-          </div>
-        </div>
-      </header>
-
+    <SubpageLayout>
       <main className="mx-auto max-w-4xl px-6 py-16">
         <h1 className="mb-2 text-4xl font-bold tracking-tight">
           Personvernerklæring
@@ -323,16 +308,7 @@ export default function PrivacyPage() {
           </section>
         </div>
 
-        <div className="mt-16 border-t border-border pt-8 flex flex-wrap gap-4">
-          <Link href="/" className="text-sm text-accent transition-colors hover:text-accent-hover">
-            &larr; Tilbake til forsiden
-          </Link>
-          <span className="text-sm text-border">|</span>
-          <Link href="/terms" className="text-sm text-muted transition-colors hover:text-white">Vilkår for bruk</Link>
-          <Link href="/cookies" className="text-sm text-muted transition-colors hover:text-white">Cookies</Link>
-          <Link href="/gdpr" className="text-sm text-muted transition-colors hover:text-white">GDPR</Link>
-        </div>
       </main>
-    </div>
+    </SubpageLayout>
   );
 }
