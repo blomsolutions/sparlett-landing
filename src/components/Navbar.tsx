@@ -51,12 +51,12 @@ export default function Navbar() {
           >
             Kontakt
           </a>
-          <a
-            href="https://app.sparlett.no"
+          <Link
+            href="/beta"
             className="rounded-xl bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover"
           >
-            Start gratis
-          </a>
+            Test beta
+          </Link>
         </div>
 
         <button
@@ -107,13 +107,13 @@ export default function Navbar() {
             >
               Kontakt
             </a>
-            <a
-              href="https://app.sparlett.no"
+            <Link
+              href="/beta"
               className="rounded-xl bg-accent px-5 py-3 text-center font-medium text-white transition-colors hover:bg-accent-hover"
               onClick={() => setMobileOpen(false)}
             >
-              Start gratis
-            </a>
+              Test beta
+            </Link>
           </div>
         </div>
       )}

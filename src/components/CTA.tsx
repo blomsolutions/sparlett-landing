@@ -32,21 +32,21 @@ export default function CTA() {
             <span className="gradient-text">økonomien din?</span>
           </h2>
           <p className="mb-10 text-lg text-muted">
-            Sparlett.no er gratis i beta. Prøv appen allerede i dag — det tar
-            under 2 minutter å komme i gang.
+            Søk om beta-tilgang i dag og få 1 års gratis abonnement
+            når vi lanserer. Begrenset antall plasser.
           </p>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
-              href="https://app.sparlett.no"
+              href="/beta"
               className="group relative overflow-hidden rounded-xl bg-accent px-10 py-4 text-center font-semibold text-white transition-all hover:bg-accent-hover hover:shadow-xl hover:shadow-accent/25"
             >
-              Start gratis nå &rarr;
+              Søk beta-tilgang &rarr;
             </a>
           </div>
 
           <p className="mt-6 text-sm text-muted">
-            Gratis i hele beta-perioden. Ingen kredittkort kreves.
+            Begrenset antall plasser. 1 års gratis abonnement for beta-testere.
           </p>
         </div>
       </div>

@@ -27,7 +27,7 @@ export default function Hero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
           </span>
-          Gratis i beta — prøv nå
+          Beta-program — søk nå
         </div>
 
         {/* Main headline */}
@@ -51,10 +51,10 @@ export default function Hero() {
           className={`mb-8 flex flex-col gap-4 sm:flex-row transition-all delay-300 duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
         >
           <a
-            href="https://app.sparlett.no"
+            href="/beta"
             className="group relative overflow-hidden rounded-xl bg-accent px-8 py-4 text-center font-semibold text-white transition-all hover:bg-accent-hover hover:shadow-lg hover:shadow-accent/25"
           >
-            <span className="relative z-10">Start gratis &rarr;</span>
+            <span className="relative z-10">Søk beta-tilgang &rarr;</span>
           </a>
           <a
             href="#funksjoner"

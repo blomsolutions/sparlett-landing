@@ -39,6 +39,7 @@ export default function Footer() {
                 { label: "Funksjoner", href: "/#funksjoner" },
                 { label: "Priser", href: "/#priser" },
                 { label: "Lumi AI", href: "/#lumi" },
+                { label: "Test beta", href: "/beta" },
                 { label: "Sikkerhet", href: "/sikkerhet" },
               ].map((item) => (
                 <li key={item.label}>

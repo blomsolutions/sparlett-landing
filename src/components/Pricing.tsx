@@ -37,7 +37,7 @@ const upcoming = [
       </svg>
     ),
     title: "Prismodell",
-    description: "Vi jobber med en rettferdig prismodell. Inntil da er alt helt gratis.",
+    description: "Vi jobber med en rettferdig prismodell. Beta-testere får 1 års gratis abonnement ved lansering.",
   },
 ];
 
@@ -63,14 +63,14 @@ export default function Pricing() {
           <h2
             className={`mb-4 text-4xl font-bold tracking-tight transition-all duration-700 md:text-5xl ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
           >
-            Helt gratis.{" "}
-            <span className="gradient-text">Så lenge vi er i beta.</span>
+            Test gratis.{" "}
+            <span className="gradient-text">Få 1 år på oss.</span>
           </h2>
           <p
             className={`mx-auto max-w-2xl text-lg text-muted transition-all delay-100 duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
           >
-            Sparlett.no fungerer fullt ut allerede i dag — uten bankintegrasjon eller app.
-            Registrer forbruk, sett mål, og la Lumi hjelpe deg å spare smartere.
+            Søk om beta-tilgang og test Sparlett.no gratis. Beta-testere
+            får 1 års gratis abonnement når vi lanserer.
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export default function Pricing() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
               </span>
-              Beta — gratis tilgang
+              Beta-program — søk nå
             </div>
 
             <h3 className="mt-2 text-2xl font-bold text-white">Sparlett.no Beta</h3>
@@ -93,7 +93,7 @@ export default function Pricing() {
 
             <div className="mt-6 mb-6">
               <span className="text-5xl font-bold text-white">Gratis</span>
-              <span className="ml-2 text-sm text-muted">i hele beta-perioden</span>
+              <span className="ml-2 text-sm text-muted">under beta + 1 år etter lansering</span>
             </div>
 
             <ul className="mb-8 space-y-3">
@@ -118,14 +118,14 @@ export default function Pricing() {
             </ul>
 
             <a
-              href="https://app.sparlett.no"
+              href="/beta"
               className="block w-full rounded-xl bg-accent py-3.5 text-center font-medium text-white shadow-lg shadow-accent/20 transition-all hover:bg-accent-hover"
             >
-              Kom i gang — helt gratis
+              Søk beta-tilgang
             </a>
 
             <p className="mt-4 text-center text-xs text-muted">
-              Ingen kredittkort kreves. Ingen bindingstid.
+              Begrenset antall plasser. Ingen forpliktelser.
             </p>
           </div>
 
