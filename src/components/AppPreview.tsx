@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Ring3 from "./Ring3";
 import Curve from "./Curve";
 
@@ -9,6 +12,20 @@ const chatMessages = [
 ];
 
 export default function AppPreview() {
+  const [visibleMessages, setVisibleMessages] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setVisibleMessages((prev) => {
+        if (prev >= chatMessages.length) {
+          clearInterval(timer);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 1400);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="rounded-2xl border border-border bg-white p-2 shadow-sm">
@@ -61,18 +78,19 @@ export default function AppPreview() {
             </div>
           </div>
 
-          {/* Right: Insight Feed */}
-          <div className="flex flex-col rounded-lg border border-border bg-white p-4">
+          {/* Right: Insight Feed — fixed height, messages animate in */}
+          <div className="flex flex-col rounded-lg border border-border bg-white p-4 min-h-[280px]">
             <div className="mb-3 flex items-center gap-2">
               <Ring3 size={14} strokeWidth={1.4} state={1} />
               <span className="text-xs font-semibold text-sand">Innsikt</span>
             </div>
 
-            <div className="flex-1 space-y-2.5">
-              {chatMessages.map((msg, i) => (
+            <div className="flex-1 flex flex-col justify-end space-y-2.5">
+              {chatMessages.slice(0, visibleMessages).map((msg, i) => (
                 <div
                   key={i}
                   className={`flex ${msg.isUser ? "justify-end" : "justify-start"}`}
+                  style={{ animation: "slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both" }}
                 >
                   <div
                     className={`max-w-[85%] rounded-lg px-3 py-2 text-xs ${msg.isUser ? "bg-sage-light" : "bg-sand-bg text-deep"}`}
@@ -89,6 +107,14 @@ export default function AppPreview() {
                   </div>
                 </div>
               ))}
+
+              {visibleMessages < chatMessages.length && (
+                <div className="flex items-center gap-1 px-3 py-2">
+                  <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage/50" />
+                  <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage/50" style={{ animationDelay: "0.2s" }} />
+                  <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage/50" style={{ animationDelay: "0.4s" }} />
+                </div>
+              )}
             </div>
           </div>
         </div>
