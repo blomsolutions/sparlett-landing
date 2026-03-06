@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import BrandGuideClient from "./BrandGuideClient";
+import BrandGuideWrapper from "./BrandGuideWrapper";
 
 export const metadata: Metadata = {
   title: "Brandguide",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function BrandGuidePage() {
-  return <BrandGuideClient />;
+  return <BrandGuideWrapper />;
 }

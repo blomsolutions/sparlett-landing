@@ -15,12 +15,14 @@ export default function BrandGuideClient() {
   const [denied, setDenied] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
+    if (!auth) { setLoading(false); return; }
+    const a = auth;
+    const unsubscribe = onAuthStateChanged(a, (u) => {
       if (u && ALLOWED_EMAILS.includes(u.email ?? "")) {
         setUser(u);
         setDenied(false);
       } else if (u) {
-        signOut(auth);
+        signOut(a);
         setDenied(true);
       }
       setLoading(false);
@@ -29,6 +31,7 @@ export default function BrandGuideClient() {
   }, []);
 
   const handleSignIn = async () => {
+    if (!auth) return;
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
