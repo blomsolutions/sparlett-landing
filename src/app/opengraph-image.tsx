@@ -13,7 +13,7 @@ export default function OpenGraphImage() {
   const proportions = [1 / 3, 1 / 3, 1 / 3];
   const colors = ["#C8A87C", "#4A7C6F", "#3D6B5F"];
   const gap = 4;
-  let offset = -circ * 0.25;
+  let offset = circ * 0.08;
 
   const ringCircles = proportions.map((val, i) => {
     const dashLen = circ * val;

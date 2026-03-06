@@ -34,7 +34,7 @@ export default function Ring3({
   const sw = strokeWidth || size * 0.08;
   const proportions = STATES[state] || STATES[0];
   const colors = [COLORS.sand, COLORS.sage, COLORS.sageDark];
-  let offset = -circ * 0.25;
+  let offset = circ * 0.08;
 
   return (
     <svg
