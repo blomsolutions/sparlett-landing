@@ -1,0 +1,386 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+interface QuoteData {
+  symbol: string;
+  name: string;
+  price: number;
+  change: number;
+  changePercent: number;
+  currency: string;
+  marketState: string;
+}
+
+interface ChartPoint {
+  date: string;
+  close: number;
+}
+
+function MiniChart({ data, positive }: { data: ChartPoint[]; positive: boolean }) {
+  if (data.length < 2) return null;
+  const rates = data.map((d) => d.close);
+  const min = Math.min(...rates);
+  const max = Math.max(...rates);
+  const range = max - min || 1;
+  const w = 120;
+  const h = 40;
+
+  const points = data.map((d, i) => {
+    const x = (i / (data.length - 1)) * w;
+    const y = h - ((d.close - min) / range) * h;
+    return `${x},${y}`;
+  });
+
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="h-10 w-[120px]" preserveAspectRatio="none">
+      <polyline
+        points={points.join(" ")}
+        fill="none"
+        stroke={positive ? "#4A7C6F" : "#B87D6A"}
+        strokeWidth={1.5}
+      />
+    </svg>
+  );
+}
+
+function QuoteRow({
+  q,
+  onSelect,
+  selected,
+}: {
+  q: QuoteData;
+  onSelect: (symbol: string) => void;
+  selected: boolean;
+}) {
+  const positive = q.change >= 0;
+  return (
+    <button
+      onClick={() => onSelect(q.symbol)}
+      className={`flex w-full items-center gap-4 border-b border-border/50 px-4 py-3 text-left transition-colors hover:bg-sage-light/30 ${selected ? "bg-sage-light/40" : ""}`}
+    >
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-xs text-muted">
+            {q.symbol.replace(".OL", "")}
+          </span>
+          {q.marketState === "REGULAR" && (
+            <span className="h-1.5 w-1.5 rounded-full bg-sage" />
+          )}
+        </div>
+        <div className="truncate text-sm font-medium text-deep">{q.name}</div>
+      </div>
+      <div className="text-right">
+        <div className="font-mono text-sm font-semibold text-deep">
+          {q.price.toLocaleString("nb-NO", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </div>
+        <div
+          className={`font-mono text-xs ${positive ? "text-sage" : "text-terra"}`}
+        >
+          {positive ? "+" : ""}
+          {q.changePercent.toFixed(2)}%
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function DetailChart({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
+  if (data.length < 2)
+    return (
+      <div className="flex h-48 items-center justify-center text-sm text-muted">
+        Laster graf...
+      </div>
+    );
+
+  const rates = data.map((d) => d.close);
+  const min = Math.min(...rates);
+  const max = Math.max(...rates);
+  const range = max - min || 1;
+  const w = 600;
+  const h = 200;
+  const pad = 30;
+
+  const points = data.map((d, i) => {
+    const x = pad + (i / (data.length - 1)) * (w - pad * 2);
+    const y = h - pad - ((d.close - min) / range) * (h - pad * 2);
+    return { x, y, ...d };
+  });
+
+  const linePath = points
+    .map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`)
+    .join(" ");
+  const areaPath = `${linePath} L ${points[points.length - 1].x} ${h - pad} L ${points[0].x} ${h - pad} Z`;
+
+  const positive = rates[rates.length - 1] >= rates[0];
+  const color = positive ? "#4A7C6F" : "#B87D6A";
+
+  const gridLines = 5;
+  const gridVals = Array.from(
+    { length: gridLines },
+    (_, i) => min + (range / (gridLines - 1)) * i
+  );
+
+  // date labels (show ~5)
+  const step = Math.floor(data.length / 4);
+  const dateIdxs = [0, step, step * 2, step * 3, data.length - 1];
+
+  return (
+    <div>
+      <div className="mb-2 flex items-center gap-2">
+        <span className="font-mono text-xs font-semibold text-deep">
+          {symbol.replace(".OL", "")}
+        </span>
+        <span className="text-xs text-muted">siste 3 måneder</span>
+      </div>
+      <svg
+        viewBox={`0 0 ${w} ${h}`}
+        className="w-full"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        {gridVals.map((val, i) => {
+          const y = h - pad - ((val - min) / range) * (h - pad * 2);
+          return (
+            <g key={i}>
+              <line
+                x1={pad}
+                y1={y}
+                x2={w - pad}
+                y2={y}
+                stroke="#D4D0C8"
+                strokeWidth={0.5}
+                strokeDasharray="4 4"
+              />
+              <text
+                x={pad - 4}
+                y={y + 3}
+                fontSize={8}
+                fill="#8B9D97"
+                textAnchor="end"
+                fontFamily="JetBrains Mono, monospace"
+              >
+                {val.toFixed(1)}
+              </text>
+            </g>
+          );
+        })}
+        <defs>
+          <linearGradient id={`grad-${symbol}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity={0.15} />
+            <stop offset="100%" stopColor={color} stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <path d={areaPath} fill={`url(#grad-${symbol})`} />
+        <path d={linePath} fill="none" stroke={color} strokeWidth={1.5} />
+        {dateIdxs.map((idx) => {
+          const p = points[idx];
+          if (!p) return null;
+          const d = new Date(p.date);
+          const label = `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}`;
+          return (
+            <text
+              key={idx}
+              x={p.x}
+              y={h - 8}
+              fontSize={8}
+              fill="#8B9D97"
+              textAnchor="middle"
+              fontFamily="JetBrains Mono, monospace"
+            >
+              {label}
+            </text>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+export default function BorsClient({
+  osloQuotes,
+  globalQuotes,
+}: {
+  osloQuotes: QuoteData[];
+  globalQuotes: QuoteData[];
+}) {
+  const [tab, setTab] = useState<"oslo" | "global">("oslo");
+  const [selected, setSelected] = useState<string>(
+    osloQuotes[0]?.symbol ?? ""
+  );
+  const [chartData, setChartData] = useState<Record<string, ChartPoint[]>>({});
+  const [loadingChart, setLoadingChart] = useState(false);
+
+  const quotes = tab === "oslo" ? osloQuotes : globalQuotes;
+  const selectedQuote = [...osloQuotes, ...globalQuotes].find(
+    (q) => q.symbol === selected
+  );
+
+  // Auto-load chart for initial selection
+  useEffect(() => {
+    if (selected && !chartData[selected]) {
+      handleSelect(selected);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSelect = async (symbol: string) => {
+    setSelected(symbol);
+    if (!chartData[symbol]) {
+      setLoadingChart(true);
+      try {
+        const res = await fetch(`/api/chart?symbol=${encodeURIComponent(symbol)}`);
+        if (res.ok) {
+          const data = await res.json();
+          setChartData((prev) => ({ ...prev, [symbol]: data.quotes }));
+        }
+      } catch {
+        // ignore
+      } finally {
+        setLoadingChart(false);
+      }
+    }
+  };
+
+  return (
+    <section className="pb-20">
+      <div className="mx-auto max-w-5xl px-6">
+        {/* Tabs */}
+        <div className="mb-6 flex gap-2">
+          <button
+            onClick={() => {
+              setTab("oslo");
+              if (osloQuotes[0]) setSelected(osloQuotes[0].symbol);
+            }}
+            className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors ${tab === "oslo" ? "bg-sage text-white" : "bg-sage-light text-sage hover:bg-sage-bg"}`}
+          >
+            Oslo Børs
+          </button>
+          <button
+            onClick={() => {
+              setTab("global");
+              if (globalQuotes[0]) setSelected(globalQuotes[0].symbol);
+            }}
+            className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors ${tab === "global" ? "bg-sage text-white" : "bg-sage-light text-sage hover:bg-sage-bg"}`}
+          >
+            Internasjonalt
+          </button>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-5">
+          {/* Quote list */}
+          <div className="overflow-hidden rounded-xl border border-border bg-white lg:col-span-2">
+            <div className="border-b border-border bg-canvas/50 px-4 py-3">
+              <h3 className="text-sm font-semibold text-deep">
+                {tab === "oslo" ? "Oslo Børs" : "Internasjonalt"}
+              </h3>
+              <p className="text-xs text-muted">
+                {tab === "oslo" ? "Topp 15 aksjer" : "Topp 10 aksjer"}
+              </p>
+            </div>
+            <div className="max-h-[480px] overflow-y-auto">
+              {quotes.map((q) => (
+                <QuoteRow
+                  key={q.symbol}
+                  q={q}
+                  onSelect={handleSelect}
+                  selected={q.symbol === selected}
+                />
+              ))}
+              {quotes.length === 0 && (
+                <div className="px-4 py-8 text-center text-sm text-muted">
+                  Kunne ikke hente kurser akkurat nå.
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Detail panel */}
+          <div className="rounded-xl border border-border bg-white p-6 lg:col-span-3">
+            {selectedQuote ? (
+              <>
+                <div className="mb-6 flex items-start justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-deep">
+                      {selectedQuote.name}
+                    </h3>
+                    <span className="font-mono text-xs text-muted">
+                      {selectedQuote.symbol}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-mono text-2xl font-bold text-deep">
+                      {selectedQuote.price.toLocaleString("nb-NO", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                    </div>
+                    <div className="flex items-center justify-end gap-2">
+                      <span
+                        className={`font-mono text-sm ${selectedQuote.change >= 0 ? "text-sage" : "text-terra"}`}
+                      >
+                        {selectedQuote.change >= 0 ? "+" : ""}
+                        {selectedQuote.change.toFixed(2)}
+                      </span>
+                      <span
+                        className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${selectedQuote.changePercent >= 0 ? "bg-sage-bg text-sage" : "bg-sand-bg text-terra"}`}
+                      >
+                        {selectedQuote.changePercent >= 0 ? "+" : ""}
+                        {selectedQuote.changePercent.toFixed(2)}%
+                      </span>
+                    </div>
+                    <span className="text-xs text-muted">
+                      {selectedQuote.currency}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Chart */}
+                <div className="rounded-lg border border-border/50 bg-canvas/30 p-4">
+                  {loadingChart && !chartData[selected] ? (
+                    <div className="flex h-48 items-center justify-center text-sm text-muted">
+                      Laster graf...
+                    </div>
+                  ) : chartData[selected] ? (
+                    <DetailChart
+                      data={chartData[selected]}
+                      symbol={selected}
+                    />
+                  ) : (
+                    <div className="flex h-48 items-center justify-center text-sm text-muted">
+                      Velg en aksje for å se graf
+                    </div>
+                  )}
+                </div>
+
+                {/* Market info */}
+                <div className="mt-4 flex items-center gap-3">
+                  {selectedQuote.marketState === "REGULAR" ? (
+                    <span className="flex items-center gap-1.5 text-xs text-sage">
+                      <span className="h-1.5 w-1.5 rounded-full bg-sage" />
+                      Markedet er åpent
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1.5 text-xs text-muted">
+                      <span className="h-1.5 w-1.5 rounded-full bg-muted" />
+                      Markedet er stengt
+                    </span>
+                  )}
+                  <span className="text-xs text-muted">
+                    Oppdateres hvert 5. minutt
+                  </span>
+                </div>
+              </>
+            ) : (
+              <div className="flex h-64 items-center justify-center text-sm text-muted">
+                Velg en aksje fra listen
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
