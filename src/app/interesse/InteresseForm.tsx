@@ -99,7 +99,7 @@ export default function InteresseForm() {
         disabled={status === "sending"}
         className="w-full rounded-lg bg-sage py-3.5 font-semibold text-white transition-all hover:bg-sage-dark disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {status === "sending" ? "Sender..." : "Gi meg beskjed"}
+        {status === "sending" ? "Sender..." : "Gi oss beskjed"}
       </button>
       {status === "error" && (
         <p className="text-center text-sm text-terra">

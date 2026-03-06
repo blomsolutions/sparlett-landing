@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Spinner from "@/components/Spinner";
+import InteractiveChart from "@/components/InteractiveChart";
 
 interface QuoteData {
   symbol: string;
@@ -62,7 +63,7 @@ function QuoteRow({
   );
 }
 
-function DetailChart({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
+function DetailChartWrapper({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
   if (data.length < 2)
     return (
       <div className="flex h-48 items-center justify-center">
@@ -70,36 +71,8 @@ function DetailChart({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
       </div>
     );
 
-  const rates = data.map((d) => d.close);
-  const min = Math.min(...rates);
-  const max = Math.max(...rates);
-  const range = max - min || 1;
-  const w = 600;
-  const h = 200;
-  const pad = 30;
-
-  const points = data.map((d, i) => {
-    const x = pad + (i / (data.length - 1)) * (w - pad * 2);
-    const y = h - pad - ((d.close - min) / range) * (h - pad * 2);
-    return { x, y, ...d };
-  });
-
-  const linePath = points
-    .map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`)
-    .join(" ");
-  const areaPath = `${linePath} L ${points[points.length - 1].x} ${h - pad} L ${points[0].x} ${h - pad} Z`;
-
-  const positive = rates[rates.length - 1] >= rates[0];
+  const positive = data[data.length - 1].close >= data[0].close;
   const color = positive ? "#4A7C6F" : "#B87D6A";
-
-  const gridLines = 5;
-  const gridVals = Array.from(
-    { length: gridLines },
-    (_, i) => min + (range / (gridLines - 1)) * i
-  );
-
-  const step = Math.floor(data.length / 4);
-  const dateIdxs = [0, step, step * 2, step * 3, data.length - 1];
 
   return (
     <div>
@@ -109,65 +82,11 @@ function DetailChart({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
         </span>
         <span className="text-xs text-muted">siste 3 måneder</span>
       </div>
-      <svg
-        viewBox={`0 0 ${w} ${h}`}
-        className="w-full"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        {gridVals.map((val, i) => {
-          const y = h - pad - ((val - min) / range) * (h - pad * 2);
-          return (
-            <g key={i}>
-              <line
-                x1={pad}
-                y1={y}
-                x2={w - pad}
-                y2={y}
-                stroke="#D4D0C8"
-                strokeWidth={0.5}
-                strokeDasharray="4 4"
-              />
-              <text
-                x={pad - 4}
-                y={y + 3}
-                fontSize={8}
-                fill="#8B9D97"
-                textAnchor="end"
-                fontFamily="JetBrains Mono, monospace"
-              >
-                {val.toFixed(1)}
-              </text>
-            </g>
-          );
-        })}
-        <defs>
-          <linearGradient id={`grad-${symbol}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity={0.15} />
-            <stop offset="100%" stopColor={color} stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <path d={areaPath} fill={`url(#grad-${symbol})`} />
-        <path d={linePath} fill="none" stroke={color} strokeWidth={1.5} />
-        {dateIdxs.map((idx) => {
-          const p = points[idx];
-          if (!p) return null;
-          const d = new Date(p.date);
-          const label = `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}`;
-          return (
-            <text
-              key={idx}
-              x={p.x}
-              y={h - 8}
-              fontSize={8}
-              fill="#8B9D97"
-              textAnchor="middle"
-              fontFamily="JetBrains Mono, monospace"
-            >
-              {label}
-            </text>
-          );
-        })}
-      </svg>
+      <InteractiveChart
+        data={data.map((d) => ({ date: d.date, value: d.close }))}
+        color={color}
+        valueDecimals={2}
+      />
     </div>
   );
 }
@@ -334,7 +253,7 @@ export default function BorsClient({
                       <Spinner size="md" />
                     </div>
                   ) : chartData[selected] ? (
-                    <DetailChart
+                    <DetailChartWrapper
                       data={chartData[selected]}
                       symbol={selected}
                     />

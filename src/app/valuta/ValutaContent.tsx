@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import Spinner from "@/components/Spinner";
+import InteractiveChart from "@/components/InteractiveChart";
 
 interface Rate {
   currency: string;
@@ -23,68 +24,6 @@ const flags: Record<string, string> = {
 };
 
 const popular = ["EUR","USD","GBP","SEK","DKK","CHF","PLN","JPY","CAD"];
-
-function RateChart({ data, color }: { data: HistoricalPoint[]; color: string }) {
-  if (data.length < 2) return null;
-
-  const rates = data.map((d) => d.rate);
-  const min = Math.min(...rates);
-  const max = Math.max(...rates);
-  const range = max - min || 1;
-  const w = 600;
-  const h = 160;
-  const pad = 20;
-
-  const points = data.map((d, i) => {
-    const x = pad + (i / (data.length - 1)) * (w - pad * 2);
-    const y = h - pad - ((d.rate - min) / range) * (h - pad * 2);
-    return { x, y, ...d };
-  });
-
-  const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
-  const areaPath = `${linePath} L ${points[points.length - 1].x} ${h - pad} L ${points[0].x} ${h - pad} Z`;
-
-  const gridLines = 4;
-  const gridVals = Array.from({ length: gridLines }, (_, i) => min + (range / (gridLines - 1)) * i);
-
-  return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="w-full" preserveAspectRatio="xMidYMid meet">
-      {/* Grid lines */}
-      {gridVals.map((val, i) => {
-        const y = h - pad - ((val - min) / range) * (h - pad * 2);
-        return (
-          <g key={i}>
-            <line x1={pad} y1={y} x2={w - pad} y2={y} stroke="#D4D0C8" strokeWidth={0.5} strokeDasharray="4 4" />
-            <text x={pad - 4} y={y + 3} fontSize={8} fill="#8B9D97" textAnchor="end" fontFamily="JetBrains Mono, monospace">
-              {val.toFixed(2)}
-            </text>
-          </g>
-        );
-      })}
-
-      {/* Date labels */}
-      {[0, Math.floor(data.length / 2), data.length - 1].map((idx) => {
-        const p = points[idx];
-        if (!p) return null;
-        const label = data[idx].date.slice(5);
-        return (
-          <text key={idx} x={p.x} y={h - 4} fontSize={8} fill="#8B9D97" textAnchor="middle" fontFamily="JetBrains Mono, monospace">
-            {label}
-          </text>
-        );
-      })}
-
-      {/* Area fill */}
-      <path d={areaPath} fill={color} opacity={0.08} />
-
-      {/* Line */}
-      <path d={linePath} fill="none" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
-
-      {/* End dot */}
-      <circle cx={points[points.length - 1].x} cy={points[points.length - 1].y} r={3.5} fill={color} />
-    </svg>
-  );
-}
 
 export default function ValutaContent() {
   const [rates, setRates] = useState<Rate[]>([]);
@@ -243,65 +182,64 @@ export default function ValutaContent() {
       {/* Converter */}
       <div className="rounded-xl border border-border bg-white p-6">
         <h2 className="mb-4 text-lg font-semibold text-deep">Konverter</h2>
-        <div className="grid gap-4 sm:grid-cols-[1fr_auto_1fr]">
-          <div className="space-y-4">
-            <div>
-              <label className="mb-1 block text-xs font-medium text-muted">Beløp</label>
-              <input
-                type="number" value={amount} onChange={(e) => setAmount(e.target.value)}
-                className="w-full rounded-lg border border-border bg-canvas px-4 py-3 font-mono text-sm text-deep focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/50"
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-xs font-medium text-muted">Fra</label>
-              <select
-                value={fromCur} onChange={(e) => setFromCur(e.target.value)}
-                className="w-full rounded-lg border border-border bg-canvas px-4 py-3 text-sm text-deep focus:border-sage focus:outline-none"
-              >
-                {allCurrencies.map((c) => (
-                  <option key={c.currency} value={c.currency}>
-                    {flags[c.currency] || ""} {c.currency}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
 
-          {/* Swap button */}
-          <div className="flex items-center justify-center">
-            <button
-              onClick={swapCurrencies}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-canvas text-muted transition-all hover:border-sage hover:text-sage"
-              aria-label="Bytt valutaer"
+        {/* Beløp */}
+        <div className="mb-4">
+          <label className="mb-1 block text-xs font-medium text-muted">Beløp</label>
+          <input
+            type="number" value={amount} onChange={(e) => setAmount(e.target.value)}
+            className="w-full rounded-lg border border-border bg-canvas px-4 py-3 font-mono text-sm text-deep focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage/50"
+          />
+        </div>
+
+        {/* Fra / Swap / Til — same row */}
+        <div className="mb-4 grid grid-cols-[1fr_auto_1fr] items-end gap-3">
+          <div>
+            <label className="mb-1 block text-xs font-medium text-muted">Fra</label>
+            <select
+              value={fromCur} onChange={(e) => setFromCur(e.target.value)}
+              className="w-full rounded-lg border border-border bg-canvas px-4 py-3 text-sm text-deep focus:border-sage focus:outline-none"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 16V4m0 0L3 8m4-4l4 4" />
-                <path d="M17 8v12m0 0l4-4m-4 4l-4-4" />
-              </svg>
-            </button>
+              {allCurrencies.map((c) => (
+                <option key={c.currency} value={c.currency}>
+                  {flags[c.currency] || ""} {c.currency}
+                </option>
+              ))}
+            </select>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <label className="mb-1 block text-xs font-medium text-muted">Til</label>
-              <select
-                value={toCur} onChange={(e) => setToCur(e.target.value)}
-                className="w-full rounded-lg border border-border bg-canvas px-4 py-3 text-sm text-deep focus:border-sage focus:outline-none"
-              >
-                {allCurrencies.map((c) => (
-                  <option key={c.currency} value={c.currency}>
-                    {flags[c.currency] || ""} {c.currency}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="rounded-lg bg-sage-light p-4 text-center">
-              <p className="text-xs text-muted">{amount} {fromCur} =</p>
-              <p className="font-mono text-xl font-semibold text-deep">
-                {result.toLocaleString("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {toCur}
-              </p>
-            </div>
+          <button
+            onClick={swapCurrencies}
+            className="mb-0.5 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-canvas text-muted transition-all hover:border-sage hover:text-sage"
+            aria-label="Bytt valutaer"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 16V4m0 0L3 8m4-4l4 4" />
+              <path d="M17 8v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-muted">Til</label>
+            <select
+              value={toCur} onChange={(e) => setToCur(e.target.value)}
+              className="w-full rounded-lg border border-border bg-canvas px-4 py-3 text-sm text-deep focus:border-sage focus:outline-none"
+            >
+              {allCurrencies.map((c) => (
+                <option key={c.currency} value={c.currency}>
+                  {flags[c.currency] || ""} {c.currency}
+                </option>
+              ))}
+            </select>
           </div>
+        </div>
+
+        {/* Result */}
+        <div className="rounded-lg bg-sage-light p-4 text-center">
+          <p className="text-xs text-muted">{amount} {fromCur} =</p>
+          <p className="font-mono text-xl font-semibold text-deep">
+            {result.toLocaleString("nb-NO", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {toCur}
+          </p>
         </div>
       </div>
 
@@ -336,7 +274,12 @@ export default function ValutaContent() {
               <Spinner size="sm" />
             </div>
           ) : history.length > 1 ? (
-            <RateChart data={history} color="#4A7C6F" />
+            <InteractiveChart
+              data={history.map((h) => ({ date: h.date, value: h.rate }))}
+              color="#4A7C6F"
+              valueDecimals={4}
+              height={160}
+            />
           ) : (
             <p className="py-8 text-center text-sm text-muted">Ingen historisk data tilgjengelig.</p>
           )}

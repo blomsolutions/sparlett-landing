@@ -98,14 +98,16 @@ export default function Features() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-16 text-center">
           <h2
-            className={`mb-4 text-3xl sm:text-4xl font-bold tracking-tight transition-all duration-700 md:text-5xl ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+            className={`mb-4 text-3xl sm:text-4xl font-bold tracking-tight md:text-5xl ${visible ? "animate-clip-left" : "clip-path-hidden"}`}
+            style={{ clipPath: visible ? undefined : "inset(0 100% 0 0)" }}
           >
             Alt du trenger for å spare{" "}
             <span className="text-sage">lett</span>
             <span className="text-sage">.</span>
           </h2>
           <p
-            className={`mx-auto max-w-xl text-base sm:text-lg text-muted transition-all delay-100 duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+            className={`mx-auto max-w-xl text-base sm:text-lg text-muted ${visible ? "animate-slide-in" : ""}`}
+            style={{ animationDelay: "0.15s", transform: visible ? undefined : "translateX(-40px)" }}
           >
             Innsikt og kontroll over økonomien din — uten kompleksitet.
           </p>
@@ -117,8 +119,11 @@ export default function Features() {
             return (
               <div
                 key={i}
-                className={`group rounded-xl border border-border bg-white p-6 transition-all duration-700 ${c.border} ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
-                style={{ transitionDelay: `${150 + i * 80}ms` }}
+                className={`group rounded-xl border border-border bg-white p-6 ${c.border} ${visible ? "animate-pop-in" : ""}`}
+                style={{
+                  animationDelay: `${0.15 + i * 0.08}s`,
+                  transform: visible ? undefined : "scale(0.85)",
+                }}
               >
                 <div
                   className={`mb-4 flex h-11 w-11 items-center justify-center rounded-lg ${c.bg} ${c.text}`}
@@ -137,7 +142,8 @@ export default function Features() {
         </div>
 
         <div
-          className={`mt-10 text-center transition-all delay-700 duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+          className={`mt-10 text-center ${visible ? "animate-slide-up" : ""}`}
+          style={{ animationDelay: "0.7s", transform: visible ? undefined : "translateY(32px)" }}
         >
           <a
             href="/funksjoner"

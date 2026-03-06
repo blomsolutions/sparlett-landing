@@ -5,18 +5,11 @@ import Ring3 from "./Ring3";
 import Curve from "./Curve";
 
 const chatMessages = [
-  { sector: "maal" as const, text: "Feriepotten er 68% full. Du ligger foran planen." },
-  { sector: "innsikt" as const, text: "Du bruker 23% mer på mat i helger. Vil du se detaljene?" },
-  { sector: "user" as const, text: "Ja, vis meg mer." },
-  { sector: "sparing" as const, text: "Takeaway øker på fredager. Spar 1 200 kr/mnd ved å kutte to bestillinger." },
+  { text: "Feriepotten er 68% full. Du ligger foran planen.", isUser: false },
+  { text: "Du bruker 23% mer på mat i helger. Vil du se detaljene?", isUser: false },
+  { text: "Ja, vis meg mer.", isUser: true },
+  { text: "Takeaway øker på fredager. Spar 1 200 kr/mnd ved å kutte to bestillinger.", isUser: false },
 ];
-
-const sectorConfig = {
-  innsikt: { label: "Innsikt", color: "text-sand", bg: "bg-sand-bg", state: 1 },
-  sparing: { label: "Sparing", color: "text-sage", bg: "bg-sage-bg", state: 2 },
-  maal: { label: "Mål", color: "text-sage-dark", bg: "bg-sage-dark-bg", state: 3 },
-  user: { label: "", color: "", bg: "bg-sage-light", state: 0 },
-};
 
 export default function AppPreview() {
   const [visibleMessages, setVisibleMessages] = useState(0);
@@ -68,13 +61,13 @@ export default function AppPreview() {
 
             <div className="grid grid-cols-3 gap-2">
               {[
-                { n: "FORBRUK", bg: "bg-terra-bg", color: "text-terra", v: "28 400 kr", st: 0 },
-                { n: "SPARING", bg: "bg-sage-bg", color: "text-sage", v: "4 200 kr", st: 2 },
-                { n: "MÅL", bg: "bg-sage-dark-bg", color: "text-sage-dark", v: "Ferie", st: 3 },
+                { n: "FORBRUK", v: "28 400 kr", bg: "bg-terra-bg", color: "text-terra" },
+                { n: "SPARING", v: "4 200 kr", bg: "bg-sage-bg", color: "text-sage" },
+                { n: "MÅL", v: "Ferie", bg: "bg-sage-dark-bg", color: "text-sage-dark" },
               ].map((s) => (
                 <div key={s.n} className={`rounded-md ${s.bg} p-2.5`}>
                   <div className="flex items-center gap-1 mb-1">
-                    <Ring3 size={8} strokeWidth={0.8} state={s.st} />
+                    <Ring3 size={8} strokeWidth={0.8} state={1} />
                     <span className={`text-[7px] font-semibold tracking-wide ${s.color}`}>{s.n}</span>
                   </div>
                   <div className={`text-xs font-semibold text-deep ${s.v.includes("kr") ? "font-mono" : ""}`}>
@@ -93,29 +86,27 @@ export default function AppPreview() {
             </div>
 
             <div className="flex-1 space-y-2.5 overflow-hidden">
-              {chatMessages.slice(0, visibleMessages).map((msg, i) => {
-                const cfg = sectorConfig[msg.sector];
-                return (
+              {chatMessages.slice(0, visibleMessages).map((msg, i) => (
+                <div
+                  key={i}
+                  className={`flex ${msg.isUser ? "justify-end" : "justify-start"}`}
+                  style={{ animation: "slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards" }}
+                >
                   <div
-                    key={i}
-                    className={`animate-fade-in-up flex ${msg.sector === "user" ? "justify-end" : "justify-start"}`}
+                    className={`max-w-[85%] rounded-lg px-3 py-2 text-xs ${msg.isUser ? "bg-sage-light" : "bg-sand-bg text-deep"}`}
                   >
-                    <div
-                      className={`max-w-[85%] rounded-lg px-3 py-2 text-xs ${cfg.bg} ${msg.sector === "user" ? "" : "text-deep"}`}
-                    >
-                      {msg.sector !== "user" && (
-                        <div className="flex items-center gap-1 mb-0.5">
-                          <Ring3 size={8} strokeWidth={0.8} state={cfg.state} />
-                          <span className={`text-[8px] font-semibold ${cfg.color}`}>
-                            {cfg.label}
-                          </span>
-                        </div>
-                      )}
-                      {msg.text}<span className="text-sage">.</span>
-                    </div>
+                    {!msg.isUser && (
+                      <div className="flex items-center gap-1 mb-0.5">
+                        <Ring3 size={8} strokeWidth={0.8} state={1} />
+                        <span className="text-[8px] font-semibold text-sand">
+                          Innsikt
+                        </span>
+                      </div>
+                    )}
+                    {msg.text}<span className="text-sage">.</span>
                   </div>
-                );
-              })}
+                </div>
+              ))}
 
               {visibleMessages < chatMessages.length && (
                 <div className="flex items-center gap-1 px-3 py-2">

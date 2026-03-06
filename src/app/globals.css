@@ -33,21 +33,45 @@ body {
   overflow-x: hidden;
 }
 
-/* Animations */
+/* Animations — 2D motion design, no fades */
+
+/* Slide in from left with spring overshoot */
+@keyframes slide-in {
+  0% { transform: translateX(-40px) scale(0.95); }
+  60% { transform: translateX(4px) scale(1.01); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+/* Slide up with spring */
+@keyframes slide-up {
+  0% { transform: translateY(32px) scale(0.96); }
+  60% { transform: translateY(-3px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Scale pop from center */
+@keyframes pop-in {
+  0% { transform: scale(0.85); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Clip reveal from left */
+@keyframes clip-in-left {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Clip reveal from bottom */
+@keyframes clip-in-up {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* Float bob */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes ring-rotate {
@@ -59,8 +83,24 @@ body {
   animation: float 6s ease-in-out infinite;
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.7s ease-out forwards;
+.animate-slide-in {
+  animation: slide-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-pop-in {
+  animation: pop-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-clip-left {
+  animation: clip-in-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-clip-up {
+  animation: clip-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Selection */

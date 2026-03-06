@@ -7,11 +7,11 @@ import BgFill from "./BgFill";
 import AppPreview from "./AppPreview";
 
 export default function Hero() {
-  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [ringState, setRingState] = useState(0);
 
   useEffect(() => {
-    setVisible(true);
+    setMounted(true);
     const timer = setInterval(() => {
       setRingState((prev) => (prev + 1) % 4);
     }, 2500);
@@ -23,18 +23,26 @@ export default function Hero() {
       <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 pb-20 pt-16 lg:pt-28">
         {/* Hero banner */}
         <div
-          className={`mb-10 w-full max-w-3xl rounded-2xl bg-deep p-10 sm:p-14 relative overflow-hidden transition-all delay-100 duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+          className={`mb-10 w-full max-w-3xl rounded-2xl bg-deep p-10 sm:p-14 relative overflow-hidden ${mounted ? "animate-slide-up" : "scale-96 translate-y-8"}`}
         >
           <BgFill />
           <div className="relative flex flex-col items-center text-center">
             <Ring3 size={56} strokeWidth={4.5} state={ringState} className="mb-4" />
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-canvas leading-tight tracking-tight">
+            <h1
+              className={`text-4xl sm:text-5xl md:text-6xl font-bold text-canvas leading-tight tracking-tight ${mounted ? "animate-clip-left" : ""}`}
+              style={{ animationDelay: "0.2s" }}
+            >
               Din økonomi,{" "}
               <span className="text-sage">håndtert</span>
               <span className="text-sage">.</span>
             </h1>
-            <Curve width={240} height={14} strokeWidth={2} className="mt-2" />
-            <p className="mt-6 max-w-lg text-base sm:text-lg text-muted leading-relaxed">
+            <div className={`mt-2 ${mounted ? "animate-clip-left" : ""}`} style={{ animationDelay: "0.35s" }}>
+              <Curve width={240} height={14} strokeWidth={2} />
+            </div>
+            <p
+              className={`mt-6 max-w-lg text-base sm:text-lg text-muted leading-relaxed ${mounted ? "animate-slide-in" : ""}`}
+              style={{ animationDelay: "0.4s" }}
+            >
               Sparlett gir deg innsikt og kontroll — og jobber for deg selv når du ikke tenker på det<span className="text-sage">.</span>
             </p>
           </div>
@@ -42,7 +50,8 @@ export default function Hero() {
 
         {/* Beta CTA module */}
         <div
-          className={`mb-14 w-full max-w-2xl rounded-2xl border border-sage/20 bg-white p-8 sm:p-10 text-center transition-all delay-300 duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+          className={`mb-14 w-full max-w-2xl rounded-2xl border border-sage/20 bg-white p-8 sm:p-10 text-center ${mounted ? "animate-pop-in" : "scale-85"}`}
+          style={{ animationDelay: "0.3s" }}
         >
           <div className="mb-4 inline-flex items-center gap-2 rounded-md bg-sage-bg px-2.5 py-1">
             <span className="relative flex h-1.5 w-1.5">
@@ -65,10 +74,10 @@ export default function Hero() {
               Søk beta-tilgang
             </a>
             <a
-              href="/funksjoner"
-              className="rounded-lg border-[1.5px] border-border px-8 py-3.5 font-semibold text-deep transition-all hover:border-sage hover:bg-sage-light"
+              href="/interesse"
+              className="rounded-lg border-[1.5px] border-sage/40 px-8 py-3.5 font-semibold text-sage transition-all hover:bg-sage-light hover:border-sage"
             >
-              Se hvordan det fungerer
+              Meld interesse
             </a>
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-muted">
@@ -89,7 +98,8 @@ export default function Hero() {
 
         {/* App Preview */}
         <div
-          className={`w-full max-w-4xl transition-all delay-500 duration-1000 ${visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+          className={`w-full max-w-4xl ${mounted ? "animate-slide-up" : "translate-y-12 scale-96"}`}
+          style={{ animationDelay: "0.5s" }}
         >
           <AppPreview />
         </div>

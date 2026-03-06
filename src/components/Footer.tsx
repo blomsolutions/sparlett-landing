@@ -9,7 +9,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="mb-3">
-              <Logo size="md" />
+              <Logo size="md" darkBg />
             </div>
             <Curve width={80} height={6} strokeWidth={1} className="mb-3" />
             <p className="mb-4 text-sm leading-relaxed text-sage-lt">
