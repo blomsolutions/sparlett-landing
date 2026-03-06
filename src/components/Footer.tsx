@@ -3,7 +3,7 @@ import Curve from "./Curve";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-white">
+    <footer className="bg-deep">
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
@@ -12,14 +12,14 @@ export default function Footer() {
               <Logo size="md" />
             </div>
             <Curve width={80} height={6} strokeWidth={1} className="mb-3" />
-            <p className="mb-4 text-sm leading-relaxed text-muted">
+            <p className="mb-4 text-sm leading-relaxed text-sage-lt">
               Lett å spare<span className="text-sage">.</span> Lett å ha <span className="text-sage">kontroll</span><span className="text-sage">.</span>
             </p>
-            <div className="space-y-1.5 text-sm text-muted/70">
-              <a href="mailto:hei@sparlett.no" className="block transition-colors hover:text-deep">
+            <div className="space-y-1.5 text-sm text-muted">
+              <a href="mailto:hei@sparlett.no" className="block transition-colors hover:text-canvas">
                 hei@sparlett.no
               </a>
-              <a href="tel:+4790790093" className="block transition-colors hover:text-deep">
+              <a href="tel:+4790790093" className="block transition-colors hover:text-canvas">
                 +47 907 90 093
               </a>
             </div>
@@ -27,7 +27,7 @@ export default function Footer() {
 
           {/* Product */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted">
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-canvas/70">
               Produkt
             </h4>
             <ul className="space-y-3">
@@ -35,10 +35,11 @@ export default function Footer() {
                 { label: "Funksjoner", href: "/funksjoner" },
                 { label: "Priser", href: "/priser" },
                 { label: "Kom i gang", href: "/beta" },
+                { label: "Meld interesse", href: "/interesse" },
                 { label: "Sikkerhet", href: "/sikkerhet" },
               ].map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="text-sm text-muted transition-colors hover:text-deep">
+                  <a href={item.href} className="text-sm text-muted transition-colors hover:text-canvas">
                     {item.label}
                   </a>
                 </li>
@@ -48,7 +49,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted">
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-canvas/70">
               Selskap
             </h4>
             <ul className="space-y-3">
@@ -59,7 +60,7 @@ export default function Footer() {
                 { label: "Kontakt", href: "/kontakt" },
               ].map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="text-sm text-muted transition-colors hover:text-deep">
+                  <a href={item.href} className="text-sm text-muted transition-colors hover:text-canvas">
                     {item.label}
                   </a>
                 </li>
@@ -69,7 +70,7 @@ export default function Footer() {
 
           {/* Legal + Tools */}
           <div>
-            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-muted">
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-canvas/70">
               Juridisk
             </h4>
             <ul className="space-y-3">
@@ -80,24 +81,24 @@ export default function Footer() {
                 { label: "GDPR", href: "/gdpr" },
               ].map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="text-sm text-muted transition-colors hover:text-deep">
+                  <a href={item.href} className="text-sm text-muted transition-colors hover:text-canvas">
                     {item.label}
                   </a>
                 </li>
               ))}
             </ul>
 
-            <h4 className="mb-4 mt-8 text-sm font-semibold uppercase tracking-wider text-muted">
+            <h4 className="mb-4 mt-8 text-sm font-semibold uppercase tracking-wider text-canvas/70">
               Verktøy
             </h4>
             <ul className="space-y-3">
               <li>
-                <a href="/valuta" className="text-sm text-muted transition-colors hover:text-deep">
+                <a href="/valuta" className="text-sm text-muted transition-colors hover:text-canvas">
                   Valutakalkulator
                 </a>
               </li>
               <li>
-                <a href="/bors" className="text-sm text-muted transition-colors hover:text-deep">
+                <a href="/bors" className="text-sm text-muted transition-colors hover:text-canvas">
                   Børs
                 </a>
               </li>
@@ -105,7 +106,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-muted/20 pt-8 sm:flex-row">
           <div className="flex flex-col items-center gap-1 sm:items-start">
             <p className="text-sm text-muted/60">
               &copy; {new Date().getFullYear()} Sparlett. Alle rettigheter reservert.

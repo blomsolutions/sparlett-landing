@@ -135,6 +135,20 @@ export default function Features() {
             );
           })}
         </div>
+
+        <div
+          className={`mt-10 text-center transition-all delay-700 duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+        >
+          <a
+            href="/funksjoner"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-sage transition-colors hover:text-sage-dark"
+          >
+            Se alle funksjoner
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+        </div>
       </div>
     </section>
   );

@@ -15,24 +15,24 @@ const savings = [
     title: "Glemte abonnementer",
     example: "Treningssenter du ikke bruker, strømmetjenester du har glemt",
     amount: "500–2 000 kr/mnd",
-    sector: "sand" as const,
+    sector: "terra" as const,
   },
   {
     title: "Bedre avtaler",
     example: "Strøm, forsikring og mobilabonnement over markedspris",
     amount: "300–800 kr/mnd",
-    sector: "sage" as const,
+    sector: "terra" as const,
   },
   {
     title: "Ubevisst forbruk",
     example: "Småkjøp, takeaway og impulshandling du ikke tenker over",
     amount: "1 000–3 000 kr/mnd",
-    sector: "sageDark" as const,
+    sector: "terra" as const,
   },
 ];
 
 const sectorColorMap = {
-  sand: { bg: "bg-sand-bg", text: "text-sand", accent: "#C8A87C" },
+  terra: { bg: "bg-terra-bg", text: "text-terra", accent: "#B87D6A" },
   sage: { bg: "bg-sage-bg", text: "text-sage", accent: "#4A7C6F" },
   sageDark: { bg: "bg-sage-dark-bg", text: "text-sage-dark", accent: "#3D6B5F" },
 };
@@ -77,7 +77,7 @@ export default function PriserPage() {
                   <div
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${c.bg} ${c.text}`}
                   >
-                    <Ring3 size={16} strokeWidth={1.5} state={s.sector === "sand" ? 1 : s.sector === "sage" ? 2 : 3} />
+                    <Ring3 size={16} strokeWidth={1.5} />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between gap-4">

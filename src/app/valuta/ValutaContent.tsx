@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import Spinner from "@/components/Spinner";
 
 interface Rate {
   currency: string;
@@ -215,7 +216,7 @@ export default function ValutaContent() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-sage border-t-transparent mx-auto mb-3" />
+          <Spinner size="md" className="mx-auto mb-3" />
           <p className="text-sm text-muted">Henter valutakurser...</p>
         </div>
       </div>
@@ -332,7 +333,7 @@ export default function ValutaContent() {
           </div>
           {historyLoading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-sage border-t-transparent" />
+              <Spinner size="sm" />
             </div>
           ) : history.length > 1 ? (
             <RateChart data={history} color="#4A7C6F" />

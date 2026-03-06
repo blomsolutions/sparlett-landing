@@ -3,28 +3,37 @@
 import { useEffect, useState } from "react";
 import Ring3 from "@/components/Ring3";
 
-const demoMessages = [
+type Sector = "innsikt" | "sparing" | "maal" | "varsel";
+
+const demoMessages: { sector: Sector; text: string }[] = [
   {
-    role: "platform" as const,
+    sector: "innsikt",
     text: "Du brukte 12 400 kr på mat i februar. Det er 18% mer enn gjennomsnittet ditt.",
   },
   {
-    role: "insight" as const,
+    sector: "sparing",
     text: "Takeaway utgjør 4 200 kr av matbudsjettet. Kutt to bestillinger per uke og spar 1 680 kr/mnd.",
   },
   {
-    role: "platform" as const,
+    sector: "maal",
     text: "Sparemålet «Feriepotten» er 68% fullført. Du ligger 3 uker foran planen.",
   },
   {
-    role: "insight" as const,
+    sector: "varsel",
     text: "Strømavtalen din er 280 kr over markedspris. Bytt leverandør og spar 3 360 kr i året.",
   },
   {
-    role: "platform" as const,
+    sector: "varsel",
     text: "Abonnementet på treningssenter har ikke blitt brukt på 47 dager.",
   },
 ];
+
+const sectorConfig = {
+  innsikt: { label: "Innsikt", color: "text-sand", bg: "bg-sand-bg", state: 1 },
+  sparing: { label: "Sparing", color: "text-sage", bg: "bg-sage-bg", state: 2 },
+  maal: { label: "Mål", color: "text-sage-dark", bg: "bg-sage-dark-bg", state: 3 },
+  varsel: { label: "Varsel", color: "text-terra", bg: "bg-terra-bg", state: 0 },
+};
 
 export default function InnsiktDemo() {
   const [visibleCount, setVisibleCount] = useState(0);
@@ -54,21 +63,14 @@ export default function InnsiktDemo() {
       {/* Stats row */}
       <div className="mb-5 grid grid-cols-3 gap-3">
         {[
-          { label: "FORBRUK", value: "28 400 kr", sector: "sand", state: 1 },
-          { label: "SPART", value: "4 200 kr", sector: "sage", state: 2 },
-          { label: "MÅL", value: "68%", sector: "sageDark", state: 3 },
+          { label: "FORBRUK", value: "28 400 kr", bg: "bg-terra-bg", color: "text-terra", state: 0 },
+          { label: "SPART", value: "4 200 kr", bg: "bg-sage-bg", color: "text-sage", state: 2 },
+          { label: "MÅL", value: "68%", bg: "bg-sage-dark-bg", color: "text-sage-dark", state: 3 },
         ].map((s) => (
-          <div
-            key={s.label}
-            className={`rounded-lg p-3 ${
-              s.sector === "sand" ? "bg-sand-bg" : s.sector === "sage" ? "bg-sage-bg" : "bg-sage-dark-bg"
-            }`}
-          >
+          <div key={s.label} className={`rounded-lg p-3 ${s.bg}`}>
             <div className="mb-1 flex items-center gap-1.5">
               <Ring3 size={10} strokeWidth={1} state={s.state} />
-              <span className={`text-[8px] font-semibold tracking-wide ${
-                s.sector === "sand" ? "text-sand" : s.sector === "sage" ? "text-sage" : "text-sage-dark"
-              }`}>{s.label}</span>
+              <span className={`text-[8px] font-semibold tracking-wide ${s.color}`}>{s.label}</span>
             </div>
             <span className="font-mono text-sm font-semibold text-deep">{s.value}</span>
           </div>
@@ -77,32 +79,31 @@ export default function InnsiktDemo() {
 
       {/* Message feed */}
       <div className="space-y-3">
-        {demoMessages.slice(0, visibleCount).map((msg, i) => (
-          <div
-            key={i}
-            className={`animate-fade-in-up rounded-lg px-4 py-3 ${
-              msg.role === "insight" ? "bg-sand-bg" : "bg-canvas border border-border"
-            }`}
-          >
-            <div className="mb-1 flex items-center gap-1.5">
-              <Ring3 size={10} strokeWidth={1} state={msg.role === "insight" ? 1 : 0} />
-              <span className={`text-[9px] font-semibold ${
-                msg.role === "insight" ? "text-sand" : "text-sage"
-              }`}>
-                {msg.role === "insight" ? "Innsikt" : "Sparlett"}
-              </span>
+        {demoMessages.slice(0, visibleCount).map((msg, i) => {
+          const cfg = sectorConfig[msg.sector];
+          return (
+            <div
+              key={i}
+              className={`animate-fade-in-up rounded-lg px-4 py-3 ${cfg.bg}`}
+            >
+              <div className="mb-1 flex items-center gap-1.5">
+                <Ring3 size={10} strokeWidth={1} state={cfg.state} />
+                <span className={`text-[9px] font-semibold ${cfg.color}`}>
+                  {cfg.label}
+                </span>
+              </div>
+              <p className="text-sm text-deep leading-relaxed">
+                {msg.text}<span className="text-sage">.</span>
+              </p>
             </div>
-            <p className="text-sm text-deep leading-relaxed">
-              {msg.text}<span className="text-sage">.</span>
-            </p>
-          </div>
-        ))}
+          );
+        })}
 
         {visibleCount < demoMessages.length && (
           <div className="flex items-center gap-1.5 px-4 py-3">
-            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sand/50" />
-            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sand/50" style={{ animationDelay: "0.2s" }} />
-            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sand/50" style={{ animationDelay: "0.4s" }} />
+            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage/50" />
+            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage/50" style={{ animationDelay: "0.2s" }} />
+            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-sage/50" style={{ animationDelay: "0.4s" }} />
           </div>
         )}
       </div>

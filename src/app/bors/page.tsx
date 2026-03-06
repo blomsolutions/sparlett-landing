@@ -29,6 +29,16 @@ const OSLO_TICKERS = [
   "KOG.OL",
   "REC.OL",
   "NHYDY",
+  "BWLPG.OL",
+  "FRO.OL",
+  "GOGL.OL",
+  "HAFNI.OL",
+  "KAHOT.OL",
+  "NEL.OL",
+  "PGS.OL",
+  "SCATC.OL",
+  "TGS.OL",
+  "VOW.OL",
 ];
 
 const GLOBAL_TICKERS = [
@@ -42,6 +52,16 @@ const GLOBAL_TICKERS = [
   "JPM",
   "V",
   "NFLX",
+  "BRK-B",
+  "UNH",
+  "XOM",
+  "LLY",
+  "JNJ",
+  "WMT",
+  "MA",
+  "PG",
+  "AVGO",
+  "ORCL",
 ];
 
 interface QuoteData {

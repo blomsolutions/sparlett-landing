@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Spinner from "@/components/Spinner";
 
 interface QuoteData {
   symbol: string;
@@ -15,33 +16,6 @@ interface QuoteData {
 interface ChartPoint {
   date: string;
   close: number;
-}
-
-function MiniChart({ data, positive }: { data: ChartPoint[]; positive: boolean }) {
-  if (data.length < 2) return null;
-  const rates = data.map((d) => d.close);
-  const min = Math.min(...rates);
-  const max = Math.max(...rates);
-  const range = max - min || 1;
-  const w = 120;
-  const h = 40;
-
-  const points = data.map((d, i) => {
-    const x = (i / (data.length - 1)) * w;
-    const y = h - ((d.close - min) / range) * h;
-    return `${x},${y}`;
-  });
-
-  return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="h-10 w-[120px]" preserveAspectRatio="none">
-      <polyline
-        points={points.join(" ")}
-        fill="none"
-        stroke={positive ? "#4A7C6F" : "#B87D6A"}
-        strokeWidth={1.5}
-      />
-    </svg>
-  );
 }
 
 function QuoteRow({
@@ -91,8 +65,8 @@ function QuoteRow({
 function DetailChart({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
   if (data.length < 2)
     return (
-      <div className="flex h-48 items-center justify-center text-sm text-muted">
-        Laster graf...
+      <div className="flex h-48 items-center justify-center">
+        <Spinner size="sm" />
       </div>
     );
 
@@ -124,7 +98,6 @@ function DetailChart({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
     (_, i) => min + (range / (gridLines - 1)) * i
   );
 
-  // date labels (show ~5)
   const step = Math.floor(data.length / 4);
   const dateIdxs = [0, step, step * 2, step * 3, data.length - 1];
 
@@ -199,6 +172,9 @@ function DetailChart({ data, symbol }: { data: ChartPoint[]; symbol: string }) {
   );
 }
 
+const INITIAL_OSLO = 15;
+const INITIAL_GLOBAL = 10;
+
 export default function BorsClient({
   osloQuotes,
   globalQuotes,
@@ -212,36 +188,48 @@ export default function BorsClient({
   );
   const [chartData, setChartData] = useState<Record<string, ChartPoint[]>>({});
   const [loadingChart, setLoadingChart] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   const quotes = tab === "oslo" ? osloQuotes : globalQuotes;
+  const initialCount = tab === "oslo" ? INITIAL_OSLO : INITIAL_GLOBAL;
+  const visibleQuotes = showAll ? quotes : quotes.slice(0, initialCount);
+  const hasMore = quotes.length > initialCount && !showAll;
+
   const selectedQuote = [...osloQuotes, ...globalQuotes].find(
     (q) => q.symbol === selected
   );
 
-  // Auto-load chart for initial selection
-  useEffect(() => {
-    if (selected && !chartData[selected]) {
-      handleSelect(selected);
+  const fetchChart = useCallback(async (symbol: string) => {
+    setLoadingChart(true);
+    try {
+      const res = await fetch(`/api/chart?symbol=${encodeURIComponent(symbol)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setChartData((prev) => ({ ...prev, [symbol]: data.quotes }));
+      }
+    } catch {
+      // ignore
+    } finally {
+      setLoadingChart(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSelect = async (symbol: string) => {
-    setSelected(symbol);
-    if (!chartData[symbol]) {
-      setLoadingChart(true);
-      try {
-        const res = await fetch(`/api/chart?symbol=${encodeURIComponent(symbol)}`);
-        if (res.ok) {
-          const data = await res.json();
-          setChartData((prev) => ({ ...prev, [symbol]: data.quotes }));
-        }
-      } catch {
-        // ignore
-      } finally {
-        setLoadingChart(false);
-      }
+  // Auto-load chart whenever selected changes
+  useEffect(() => {
+    if (selected && !chartData[selected]) {
+      fetchChart(selected);
     }
+  }, [selected, chartData, fetchChart]);
+
+  const handleSelect = (symbol: string) => {
+    setSelected(symbol);
+  };
+
+  const handleTabChange = (newTab: "oslo" | "global") => {
+    setTab(newTab);
+    setShowAll(false);
+    const firstQuote = newTab === "oslo" ? osloQuotes[0] : globalQuotes[0];
+    if (firstQuote) setSelected(firstQuote.symbol);
   };
 
   return (
@@ -250,19 +238,13 @@ export default function BorsClient({
         {/* Tabs */}
         <div className="mb-6 flex gap-2">
           <button
-            onClick={() => {
-              setTab("oslo");
-              if (osloQuotes[0]) setSelected(osloQuotes[0].symbol);
-            }}
+            onClick={() => handleTabChange("oslo")}
             className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors ${tab === "oslo" ? "bg-sage text-white" : "bg-sage-light text-sage hover:bg-sage-bg"}`}
           >
             Oslo Børs
           </button>
           <button
-            onClick={() => {
-              setTab("global");
-              if (globalQuotes[0]) setSelected(globalQuotes[0].symbol);
-            }}
+            onClick={() => handleTabChange("global")}
             className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors ${tab === "global" ? "bg-sage text-white" : "bg-sage-light text-sage hover:bg-sage-bg"}`}
           >
             Internasjonalt
@@ -277,11 +259,11 @@ export default function BorsClient({
                 {tab === "oslo" ? "Oslo Børs" : "Internasjonalt"}
               </h3>
               <p className="text-xs text-muted">
-                {tab === "oslo" ? "Topp 15 aksjer" : "Topp 10 aksjer"}
+                {quotes.length} aksjer
               </p>
             </div>
             <div className="max-h-[480px] overflow-y-auto">
-              {quotes.map((q) => (
+              {visibleQuotes.map((q) => (
                 <QuoteRow
                   key={q.symbol}
                   q={q}
@@ -289,6 +271,14 @@ export default function BorsClient({
                   selected={q.symbol === selected}
                 />
               ))}
+              {hasMore && (
+                <button
+                  onClick={() => setShowAll(true)}
+                  className="w-full border-t border-border/50 px-4 py-3 text-center text-sm font-semibold text-sage transition-colors hover:bg-sage-light/30"
+                >
+                  Vis {quotes.length - initialCount} flere aksjer
+                </button>
+              )}
               {quotes.length === 0 && (
                 <div className="px-4 py-8 text-center text-sm text-muted">
                   Kunne ikke hente kurser akkurat nå.
@@ -325,7 +315,7 @@ export default function BorsClient({
                         {selectedQuote.change.toFixed(2)}
                       </span>
                       <span
-                        className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${selectedQuote.changePercent >= 0 ? "bg-sage-bg text-sage" : "bg-sand-bg text-terra"}`}
+                        className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${selectedQuote.changePercent >= 0 ? "bg-sage-bg text-sage" : "bg-terra-bg text-terra"}`}
                       >
                         {selectedQuote.changePercent >= 0 ? "+" : ""}
                         {selectedQuote.changePercent.toFixed(2)}%
@@ -340,8 +330,8 @@ export default function BorsClient({
                 {/* Chart */}
                 <div className="rounded-lg border border-border/50 bg-canvas/30 p-4">
                   {loadingChart && !chartData[selected] ? (
-                    <div className="flex h-48 items-center justify-center text-sm text-muted">
-                      Laster graf...
+                    <div className="flex h-48 items-center justify-center">
+                      <Spinner size="md" />
                     </div>
                   ) : chartData[selected] ? (
                     <DetailChart

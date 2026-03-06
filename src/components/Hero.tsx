@@ -8,9 +8,14 @@ import AppPreview from "./AppPreview";
 
 export default function Hero() {
   const [visible, setVisible] = useState(false);
+  const [ringState, setRingState] = useState(0);
 
   useEffect(() => {
     setVisible(true);
+    const timer = setInterval(() => {
+      setRingState((prev) => (prev + 1) % 4);
+    }, 2500);
+    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -22,7 +27,7 @@ export default function Hero() {
         >
           <BgFill />
           <div className="relative flex flex-col items-center text-center">
-            <Ring3 size={56} strokeWidth={4.5} className="mb-4" />
+            <Ring3 size={56} strokeWidth={4.5} state={ringState} className="mb-4" />
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-canvas leading-tight tracking-tight">
               Din økonomi,{" "}
               <span className="text-sage">håndtert</span>
