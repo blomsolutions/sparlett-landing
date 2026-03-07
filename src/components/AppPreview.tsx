@@ -79,13 +79,13 @@ export default function AppPreview() {
           </div>
 
           {/* Right: Insight Feed — fixed height, messages animate in */}
-          <div className="flex flex-col rounded-lg border border-border bg-white p-4 min-h-[280px]">
-            <div className="mb-3 flex items-center gap-2">
+          <div className="flex flex-col rounded-lg border border-border bg-white p-4 h-[320px]">
+            <div className="mb-3 flex items-center gap-2 shrink-0">
               <Ring3 size={14} strokeWidth={1.4} state={1} />
               <span className="text-xs font-semibold text-sand">Innsikt</span>
             </div>
 
-            <div className="flex-1 flex flex-col justify-end space-y-2.5">
+            <div className="flex-1 flex flex-col justify-end space-y-2.5 overflow-hidden">
               {chatMessages.slice(0, visibleMessages).map((msg, i) => (
                 <div
                   key={i}
