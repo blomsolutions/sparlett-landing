@@ -30,9 +30,9 @@ export default function InsightSection() {
             <div className="relative flex flex-col items-center gap-5">
               {/* Main ring */}
               <div className="relative">
-                <Ring3 size={200} strokeWidth={16} state={1} />
+                <Ring3 size={240} strokeWidth={18} state={1} />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-mono text-2xl font-semibold text-deep">47 200 kr</span>
+                  <span className="font-mono text-xl font-semibold text-deep tracking-tight">47 200 kr</span>
                 </div>
               </div>
 
