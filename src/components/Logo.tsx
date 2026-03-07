@@ -13,8 +13,8 @@ const heights = {
 
 export default function Logo({ size = "md", darkBg = false }: LogoProps) {
   const h = heights[size];
-  // SVG aspect ratio: 555 / 147 ≈ 3.78
-  const w = Math.round(h * 3.78);
+  // SVG aspect ratio: 798 / 184 ≈ 4.34
+  const w = Math.round(h * 4.34);
 
   return (
     <Image
