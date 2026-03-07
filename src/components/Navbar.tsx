@@ -40,9 +40,9 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Center logo */}
+        {/* Center logo — nudged left for optical balance (icon+text SVG) */}
         <div className="flex justify-center md:w-1/3">
-          <Link href="/">
+          <Link href="/" className="-ml-3">
             <Logo size="lg" />
           </Link>
         </div>
