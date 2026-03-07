@@ -1,11 +1,12 @@
 "use client";
 
-const COLORS = ["#C8A87C", "#4A7C6F", "#3D6B5F"];
+// Order: sageDark, sand, sage (clockwise from top, matching brand guide)
+const COLORS = ["#3D6B5F", "#C8A87C", "#4A7C6F"];
 const STATES = [
   [1 / 3, 1 / 3, 1 / 3],
-  [0.55, 0.25, 0.2],
-  [0.22, 0.55, 0.23],
-  [0.22, 0.23, 0.55],
+  [0.2, 0.55, 0.25],
+  [0.23, 0.22, 0.55],
+  [0.55, 0.22, 0.23],
 ];
 const GAP = 1.5;
 
@@ -37,7 +38,7 @@ export default function Spinner({ size: sizeProp = "md", className }: SpinnerPro
       const holdUntil = arriveAt + 12;
       const d = circ * state[sectorIdx];
       const g = circ - d;
-      let off = circ * 0.08;
+      let off = -circ * 0.25;
       for (let j = 0; j < sectorIdx; j++) off += circ * state[j];
       const da = `stroke-dasharray:${d - GAP} ${g + GAP}`;
       const dof = `stroke-dashoffset:${-off}`;
@@ -48,7 +49,7 @@ export default function Spinner({ size: sizeProp = "md", className }: SpinnerPro
     // Close loop back to state 0
     const d0 = circ * STATES[0][sectorIdx];
     const g0 = circ - d0;
-    let off0 = circ * 0.08;
+    let off0 = -circ * 0.25;
     for (let j = 0; j < sectorIdx; j++) off0 += circ * STATES[0][j];
     dashKf += `100%{stroke-dasharray:${d0 - GAP} ${g0 + GAP}}`;
     offKf += `100%{stroke-dashoffset:${-off0}}`;
@@ -60,7 +61,7 @@ export default function Spinner({ size: sizeProp = "md", className }: SpinnerPro
   const initials = COLORS.map((_, i) => {
     const d = circ * STATES[0][i];
     const g = circ - d;
-    let off = circ * 0.08;
+    let off = -circ * 0.25;
     for (let j = 0; j < i; j++) off += circ * STATES[0][j];
     return { da: `${d - GAP} ${g + GAP}`, offset: -off };
   });

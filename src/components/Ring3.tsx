@@ -6,12 +6,13 @@ const COLORS = {
   sageDark: "#3D6B5F",
 };
 
+// Order: sageDark, sand, sage (clockwise from top, matching brand guide)
 // States: 0=neutral(1/3 each), 1=insight(sand heavy), 2=savings(sage heavy), 3=goals(sageDark heavy)
 const STATES = [
   [1 / 3, 1 / 3, 1 / 3],
-  [0.55, 0.25, 0.2],
-  [0.22, 0.55, 0.23],
-  [0.22, 0.23, 0.55],
+  [0.2, 0.55, 0.25],
+  [0.23, 0.22, 0.55],
+  [0.55, 0.22, 0.23],
 ];
 
 interface Ring3Props {
@@ -33,8 +34,8 @@ export default function Ring3({
   const circ = 2 * Math.PI * r;
   const sw = strokeWidth || size * 0.08;
   const proportions = STATES[state] || STATES[0];
-  const colors = [COLORS.sand, COLORS.sage, COLORS.sageDark];
-  let offset = circ * 0.08;
+  const colors = [COLORS.sageDark, COLORS.sand, COLORS.sage];
+  let offset = -circ * 0.25;
 
   return (
     <svg
