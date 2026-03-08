@@ -1,7 +1,7 @@
 "use client";
 
 // Order: sageDark, sand, sage (clockwise from top, matching brand guide)
-const COLORS = ["#3D6B5F", "#C8A87C", "#4A7C6F"];
+const COLORS = ["#2A5449", "#C8A87C", "#4A7C6F"];
 const STATES = [
   [1 / 3, 1 / 3, 1 / 3],
   [0.2, 0.55, 0.25],

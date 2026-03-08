@@ -7,7 +7,7 @@ import React, { useState, useEffect, useRef } from "react";
 const C = {
   canvas:"#F5F2ED",sage:"#4A7C6F",sand:"#C8A87C",deep:"#1E2B26",
   muted:"#8B9D97",white:"#FFFFFF",border:"#D4D0C8",sageLight:"#E8F0ED",
-  sageDark:"#3D6B5F",sageLt:"#8EAFA5",terra:"#B87D6A",
+  sageDark:"#2A5449",sageLt:"#8EAFA5",terra:"#B87D6A",
   sandBg:"#F5EDE2",sageBg:"#E8F0ED",sageDarkBg:"#E2EBE8",
 };
 const R={xs:6,sm:8,md:12,lg:16,xl:20};

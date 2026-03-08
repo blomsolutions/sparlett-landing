@@ -3,7 +3,7 @@
 const COLORS = {
   sand: "#C8A87C",
   sage: "#4A7C6F",
-  sageDark: "#3D6B5F",
+  sageDark: "#2A5449",
 };
 
 // Order: sageDark, sand, sage (clockwise from top, matching brand guide)
