@@ -60,9 +60,9 @@ export default function Hero() {
             </span>
             <span className="text-[11px] font-semibold text-sage">Beta-program</span>
           </div>
-          <h3 className="mb-2 text-xl font-bold text-deep sm:text-2xl">
+          <h2 className="mb-2 text-xl font-bold text-deep sm:text-2xl">
             Vi bygger noe nytt<span className="text-sage">.</span>
-          </h3>
+          </h2>
           <p className="mb-6 text-sm text-muted leading-relaxed">
             Sparlett er i lukket beta. Søk om tilgang og bli blant de første som får prøve plattformen<span className="text-sage">.</span>
           </p>

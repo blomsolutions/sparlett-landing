@@ -3,7 +3,13 @@ import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
   title: "Informasjonskapsler",
-  description: "Sparlett sin cookie-policy. Slik bruker vi informasjonskapsler.",
+  description: "Les om hvordan Sparlett bruker informasjonskapsler (cookies), hvilke typer vi benytter, og hvordan du kan administrere dem.",
+  alternates: { canonical: "https://sparlett.no/cookies" },
+  openGraph: {
+    title: "Informasjonskapsler — Sparlett",
+    description: "Les om hvordan Sparlett bruker informasjonskapsler (cookies), hvilke typer vi benytter, og hvordan du kan administrere dem.",
+    url: "https://sparlett.no/cookies",
+  },
 };
 
 export default function CookiesPage() {

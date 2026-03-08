@@ -6,8 +6,13 @@ import PriserForm from "./PriserForm";
 
 export const metadata: Metadata = {
   title: "Priser",
-  description:
-    "Hjelp oss å finne riktig pris for Sparlett. Fortell oss hva du hadde vært villig til å betale.",
+  description: "Se hva Sparlett koster og hvor mye du kan spare. Beta er gratis — beta-testere får 1 års gratis abonnement ved lansering.",
+  alternates: { canonical: "https://sparlett.no/priser" },
+  openGraph: {
+    title: "Priser — Sparlett",
+    description: "Se hva Sparlett koster og hvor mye du kan spare. Beta er gratis — beta-testere får 1 års gratis abonnement ved lansering.",
+    url: "https://sparlett.no/priser",
+  },
 };
 
 const savings = [
@@ -34,12 +39,25 @@ const savings = [
 const sectorColorMap = {
   terra: { bg: "bg-terra-bg", text: "text-terra", accent: "#B87D6A" },
   sage: { bg: "bg-sage-bg", text: "text-sage", accent: "#4A7C6F" },
-  sageDark: { bg: "bg-sage-dark-bg", text: "text-sage-dark", accent: "#3D6B5F" },
+  sageDark: { bg: "bg-sage-dark-bg", text: "text-sage-dark", accent: "#2A5449" },
+};
+
+const priserJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+    { "@type": "ListItem", position: 2, name: "Priser", item: "https://sparlett.no/priser" },
+  ],
 };
 
 export default function PriserPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(priserJsonLd) }}
+      />
       {/* Hero */}
       <section className="py-20">
         <div className="mx-auto max-w-3xl px-6">
@@ -127,9 +145,9 @@ export default function PriserPage() {
       <section className="pb-20">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <Ring3 size={32} strokeWidth={3} className="mx-auto mb-4" />
-          <h3 className="mb-2 text-xl font-bold text-deep">
+          <h2 className="mb-2 text-xl font-bold text-deep">
             Beta er gratis<span className="text-sage">.</span>
-          </h3>
+          </h2>
           <p className="mx-auto max-w-md text-sm text-muted leading-relaxed">
             Akkurat nå er Sparlett helt gratis. Beta-testere får 1 års gratis
             abonnement etter lansering. Du risikerer ingenting

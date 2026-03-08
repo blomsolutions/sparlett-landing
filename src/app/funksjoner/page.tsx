@@ -6,8 +6,13 @@ import InnsiktDemo from "./InnsiktDemo";
 
 export const metadata: Metadata = {
   title: "Funksjoner",
-  description:
-    "Slik fungerer Sparlett. Fra smart forbruksanalyse til sparemål med veiledning — alt du trenger for å ta kontroll over økonomien.",
+  description: "Utforsk Sparlett sine funksjoner: smart forbruksanalyse, budsjettverktøy, sparemål, AI-rådgivning og automatisk bankkobling via PSD2.",
+  alternates: { canonical: "https://sparlett.no/funksjoner" },
+  openGraph: {
+    title: "Funksjoner — Sparlett",
+    description: "Utforsk Sparlett sine funksjoner: smart forbruksanalyse, budsjettverktøy, sparemål, AI-rådgivning og automatisk bankkobling via PSD2.",
+    url: "https://sparlett.no/funksjoner",
+  },
 };
 
 const features = [
@@ -150,9 +155,57 @@ const stepColorMap = {
   sageDark: "text-sage-dark",
 };
 
+const funksjonerJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HowTo",
+      name: "Slik kommer du i gang med Sparlett",
+      description: "Fire enkle steg for å ta kontroll over økonomien din med Sparlett.",
+      step: [
+        {
+          "@type": "HowToStep",
+          position: 1,
+          name: "Koble til banken",
+          text: "Koble banken din til Sparlett. All data er kryptert og lagret sikkert i EU-baserte datasentre.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 2,
+          name: "Vi analyserer",
+          text: "Vi ser på transaksjonene dine, finner mønstre og kategoriserer automatisk. Du trenger ikke gjøre noe.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 3,
+          name: "Du får innsikt",
+          text: "Konkrete forslag basert på dine faktiske vaner. Ikke generiske tips — data som betyr noe for deg.",
+        },
+        {
+          "@type": "HowToStep",
+          position: 4,
+          name: "Spar automatisk",
+          text: "Sett mål og la Sparlett hjelpe deg dit. Vi tilpasser rådene etter hvert som vi lærer vanene dine.",
+        },
+      ],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+        { "@type": "ListItem", position: 2, name: "Funksjoner", item: "https://sparlett.no/funksjoner" },
+      ],
+    },
+  ],
+};
+
 export default function FunksjonerPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(funksjonerJsonLd) }}
+      />
       {/* Hero */}
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
@@ -279,7 +332,7 @@ export default function FunksjonerPage() {
                           ? "#C8A87C"
                           : cap.sector === "sage"
                             ? "#4A7C6F"
-                            : "#3D6B5F",
+                            : "#2A5449",
                     }}
                   />
                   <h3 className="mb-2 text-sm font-semibold text-deep">

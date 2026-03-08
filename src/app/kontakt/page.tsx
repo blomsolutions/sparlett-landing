@@ -5,12 +5,48 @@ import Curve from "@/components/Curve";
 
 export const metadata: Metadata = {
   title: "Kontakt",
-  description: "Ta kontakt med Sparlett. Vi svarer vanligvis innen 24 timer.",
+  description: "Ta kontakt med Sparlett-teamet. Send oss en melding, ring eller skriv e-post — vi svarer vanligvis innen 24 timer på hverdager.",
+  alternates: { canonical: "https://sparlett.no/kontakt" },
+  openGraph: {
+    title: "Kontakt — Sparlett",
+    description: "Ta kontakt med Sparlett-teamet. Send oss en melding, ring eller skriv e-post — vi svarer vanligvis innen 24 timer på hverdager.",
+    url: "https://sparlett.no/kontakt",
+  },
+};
+
+const kontaktJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      name: "Kontakt Sparlett",
+      description: "Ta kontakt med Sparlett-teamet via e-post, telefon eller kontaktskjema.",
+      url: "https://sparlett.no/kontakt",
+      mainEntity: {
+        "@type": "Organization",
+        "@id": "https://sparlett.no/#organization",
+        name: "BLOM SOLUTIONS",
+        email: "hei@sparlett.no",
+        telephone: "+47-907-90-093",
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+        { "@type": "ListItem", position: 2, name: "Kontakt", item: "https://sparlett.no/kontakt" },
+      ],
+    },
+  ],
 };
 
 export default function KontaktPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(kontaktJsonLd) }}
+      />
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-12">

@@ -6,12 +6,31 @@ import Curve from "@/components/Curve";
 
 export const metadata: Metadata = {
   title: "Valutakalkulator",
-  description: "Gratis valutakalkulator med offisielle kurser fra Norges Bank. Konverter mellom NOK og 37+ valutaer.",
+  description: "Gratis valutakalkulator med offisielle kurser fra Norges Bank. Konverter mellom NOK og 37+ valutaer — oppdatert daglig.",
+  alternates: { canonical: "https://sparlett.no/valuta" },
+  openGraph: {
+    title: "Valutakalkulator — Sparlett",
+    description: "Gratis valutakalkulator med offisielle kurser fra Norges Bank. Konverter mellom NOK og 37+ valutaer — oppdatert daglig.",
+    url: "https://sparlett.no/valuta",
+  },
+};
+
+const valutaJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+    { "@type": "ListItem", position: 2, name: "Valutakalkulator", item: "https://sparlett.no/valuta" },
+  ],
 };
 
 export default function ValutaPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(valutaJsonLd) }}
+      />
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
           <h1 className="mb-3 text-4xl font-bold tracking-tight">

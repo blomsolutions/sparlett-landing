@@ -3,12 +3,31 @@ import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
   title: "Personvernerklæring",
-  description: "Sparlett sin personvernerklæring. Slik behandler vi dataene dine.",
+  description: "Sparlett sin personvernerklæring. Les om hvilke data vi samler inn, hvordan vi bruker dem, og hvilke rettigheter du har etter GDPR.",
+  alternates: { canonical: "https://sparlett.no/personvern" },
+  openGraph: {
+    title: "Personvernerklæring — Sparlett",
+    description: "Sparlett sin personvernerklæring. Les om hvilke data vi samler inn, hvordan vi bruker dem, og hvilke rettigheter du har etter GDPR.",
+    url: "https://sparlett.no/personvern",
+  },
+};
+
+const personvernJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+    { "@type": "ListItem", position: 2, name: "Personvernerklæring", item: "https://sparlett.no/personvern" },
+  ],
 };
 
 export default function PersonvernPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personvernJsonLd) }}
+      />
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
           <h1 className="mb-3 text-4xl font-bold tracking-tight">

@@ -4,7 +4,14 @@ import Ring3 from "@/components/Ring3";
 
 export const metadata: Metadata = {
   title: "Blogg",
-  description: "Sparlett-bloggen. Tips og innsikt om personlig økonomi.",
+  description: "Sparlett-bloggen. Tips, guider og innsikt om personlig økonomi, sparing og smarte pengevalg i Norge.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: "https://sparlett.no/blogg" },
+  openGraph: {
+    title: "Blogg — Sparlett",
+    description: "Sparlett-bloggen. Tips, guider og innsikt om personlig økonomi, sparing og smarte pengevalg i Norge.",
+    url: "https://sparlett.no/blogg",
+  },
 };
 
 export default function BloggPage() {

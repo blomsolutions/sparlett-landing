@@ -7,8 +7,13 @@ import BorsClient from "./BorsClient";
 
 export const metadata: Metadata = {
   title: "Børs",
-  description:
-    "Følg aksjer og kurser fra Oslo Børs og internasjonale markeder. Oppdatert markedsdata med Sparlett.",
+  description: "Følg aksjer og kurser fra Oslo Børs, Nasdaq og S&P 500 i sanntid. Gratis markedsdata oppdatert hvert 5. minutt med Sparlett.",
+  alternates: { canonical: "https://sparlett.no/bors" },
+  openGraph: {
+    title: "Børs — Sparlett",
+    description: "Følg aksjer og kurser fra Oslo Børs, Nasdaq og S&P 500 i sanntid. Gratis markedsdata oppdatert hvert 5. minutt med Sparlett.",
+    url: "https://sparlett.no/bors",
+  },
 };
 
 export const revalidate = 300; // revalidate every 5 minutes

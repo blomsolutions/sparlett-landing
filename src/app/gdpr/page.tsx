@@ -3,12 +3,70 @@ import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
   title: "GDPR",
-  description: "Slik følger Sparlett GDPR og beskytter dine rettigheter.",
+  description: "Slik følger Sparlett personvernforordningen (GDPR). Les om dine rettigheter, databehandling og hvordan vi beskytter personopplysningene dine.",
+  alternates: { canonical: "https://sparlett.no/gdpr" },
+  openGraph: {
+    title: "GDPR — Sparlett",
+    description: "Slik følger Sparlett personvernforordningen (GDPR). Les om dine rettigheter, databehandling og hvordan vi beskytter personopplysningene dine.",
+    url: "https://sparlett.no/gdpr",
+  },
+};
+
+const gdprJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Hva er GDPR?",
+          acceptedAnswer: { "@type": "Answer", text: "GDPR (General Data Protection Regulation) er EUs personvernforordning som gir deg kontroll over egne personopplysninger. Sparlett er designet med personvern som grunnprinsipp." },
+        },
+        {
+          "@type": "Question",
+          name: "Hvem er behandlingsansvarlig for Sparlett?",
+          acceptedAnswer: { "@type": "Answer", text: "BLOM SOLUTIONS (org.nr. 834 411 342) er behandlingsansvarlig for personopplysninger i Sparlett." },
+        },
+        {
+          "@type": "Question",
+          name: "Hvilke rettigheter har jeg som bruker av Sparlett?",
+          acceptedAnswer: { "@type": "Answer", text: "Du har rett til innsyn, retting, sletting, begrensning av behandling, dataportabilitet, å protestere mot behandling, å trekke samtykke, og beskyttelse mot helautomatiserte avgjørelser." },
+        },
+        {
+          "@type": "Question",
+          name: "Hvordan utøver jeg mine GDPR-rettigheter?",
+          acceptedAnswer: { "@type": "Answer", text: "Send e-post til hei@sparlett.no. Vi svarer innen 30 dager." },
+        },
+        {
+          "@type": "Question",
+          name: "Hvem er Sparletts databehandlere?",
+          acceptedAnswer: { "@type": "Answer", text: "Vi bruker Google Firebase for autentisering og lagring, og Vercel for hosting. Alle er GDPR-kompatible med databehandleravtaler." },
+        },
+        {
+          "@type": "Question",
+          name: "Hvor kan jeg klage på Sparletts behandling av personopplysninger?",
+          acceptedAnswer: { "@type": "Answer", text: "Du kan klage til Datatilsynet via www.datatilsynet.no." },
+        },
+      ],
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+        { "@type": "ListItem", position: 2, name: "GDPR", item: "https://sparlett.no/gdpr" },
+      ],
+    },
+  ],
 };
 
 export default function GDPRPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(gdprJsonLd) }}
+      />
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
           <h1 className="mb-3 text-4xl font-bold tracking-tight">

@@ -4,12 +4,51 @@ import OmOssContactForm from "./OmOssContactForm";
 
 export const metadata: Metadata = {
   title: "Om oss",
-  description: "Lær mer om Sparlett og BLOM SOLUTIONS — selskapet bak plattformen.",
+  description: "Lær mer om Sparlett og BLOM SOLUTIONS — visjonen, teknologien og teamet bak Norges smarteste spareplattform.",
+  alternates: { canonical: "https://sparlett.no/om-oss" },
+  openGraph: {
+    title: "Om oss — Sparlett",
+    description: "Lær mer om Sparlett og BLOM SOLUTIONS — visjonen, teknologien og teamet bak Norges smarteste spareplattform.",
+    url: "https://sparlett.no/om-oss",
+  },
+};
+
+const omOssJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      name: "Om Sparlett",
+      description: "Lær mer om Sparlett og BLOM SOLUTIONS — visjonen, teknologien og teamet bak Norges smarteste spareplattform.",
+      url: "https://sparlett.no/om-oss",
+      mainEntity: {
+        "@type": "Organization",
+        "@id": "https://sparlett.no/#organization",
+        name: "BLOM SOLUTIONS",
+        url: "https://sparlett.no",
+        logo: "https://sparlett.no/icon.svg",
+        email: "hei@sparlett.no",
+        telephone: "+47-907-90-093",
+        description: "Sparlett er en smart spareplattform som gjør kompleks økonomi enkel og oversiktlig.",
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+        { "@type": "ListItem", position: 2, name: "Om oss", item: "https://sparlett.no/om-oss" },
+      ],
+    },
+  ],
 };
 
 export default function OmOssPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(omOssJsonLd) }}
+      />
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
           <h1 className="mb-3 text-4xl font-bold tracking-tight">

@@ -6,8 +6,13 @@ import InteresseForm from "./InteresseForm";
 
 export const metadata: Metadata = {
   title: "Meld interesse",
-  description:
-    "Meld interesse for Sparlett og bli blant de første som får tilgang når vi lanserer.",
+  description: "Meld interesse for Sparlett og bli blant de første som får tilgang. Hold deg oppdatert om lansering, nye funksjoner og tilbud.",
+  alternates: { canonical: "https://sparlett.no/interesse" },
+  openGraph: {
+    title: "Meld interesse — Sparlett",
+    description: "Meld interesse for Sparlett og bli blant de første som får tilgang. Hold deg oppdatert om lansering, nye funksjoner og tilbud.",
+    url: "https://sparlett.no/interesse",
+  },
 };
 
 export default function InteressePage() {

@@ -4,7 +4,13 @@ import Ring3 from "@/components/Ring3";
 
 export const metadata: Metadata = {
   title: "Karriere",
-  description: "Jobb hos Sparlett. Se ledige stillinger.",
+  description: "Bli med i teamet bak Sparlett. Vi bygger fremtidens personlige økonomiverktøy fra Norge — send en åpen søknad eller se ledige stillinger.",
+  alternates: { canonical: "https://sparlett.no/karriere" },
+  openGraph: {
+    title: "Karriere — Sparlett",
+    description: "Bli med i teamet bak Sparlett. Vi bygger fremtidens personlige økonomiverktøy fra Norge — send en åpen søknad eller se ledige stillinger.",
+    url: "https://sparlett.no/karriere",
+  },
 };
 
 export default function KarrierePage() {

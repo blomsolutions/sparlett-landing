@@ -84,6 +84,7 @@ const jsonLd = {
       "@id": "https://sparlett.no/#organization",
       name: "BLOM SOLUTIONS",
       url: "https://sparlett.no",
+      logo: "https://sparlett.no/icon.svg",
       contactPoint: {
         "@type": "ContactPoint",
         email: "hei@sparlett.no",

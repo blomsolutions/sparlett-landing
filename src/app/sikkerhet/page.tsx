@@ -3,7 +3,13 @@ import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
   title: "Sikkerhet",
-  description: "Slik beskytter Sparlett dataene dine. Kryptering, autentisering og GDPR-samsvar.",
+  description: "Slik beskytter Sparlett dataene dine. TLS-kryptering, EU-basert lagring, Firebase Auth, tilgangskontroll og full GDPR-etterlevelse.",
+  alternates: { canonical: "https://sparlett.no/sikkerhet" },
+  openGraph: {
+    title: "Sikkerhet — Sparlett",
+    description: "Slik beskytter Sparlett dataene dine. TLS-kryptering, EU-basert lagring, Firebase Auth, tilgangskontroll og full GDPR-etterlevelse.",
+    url: "https://sparlett.no/sikkerhet",
+  },
 };
 
 const sections = [
@@ -33,9 +39,42 @@ const sections = [
   },
 ];
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      mainEntity: sections.map((s) => ({
+        "@type": "Question",
+        name: s.title === "Datakryptering" ? "Hvordan krypterer Sparlett dataene mine?" :
+              s.title === "Autentisering" ? "Hvordan håndterer Sparlett autentisering?" :
+              s.title === "Datalagring" ? "Hvor lagres dataene mine i Sparlett?" :
+              s.title === "Tilgangskontroll" ? "Hvordan kontrollerer Sparlett tilgang til data?" :
+              s.title === "Analyse og personvern" ? "Bruker Sparlett dataene mine til andre formål?" :
+              "Er Sparlett GDPR-kompatibel?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: s.content,
+        },
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+        { "@type": "ListItem", position: 2, name: "Sikkerhet", item: "https://sparlett.no/sikkerhet" },
+      ],
+    },
+  ],
+};
+
 export default function SikkerhetPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
           <h1 className="mb-3 text-4xl font-bold tracking-tight">

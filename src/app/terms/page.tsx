@@ -3,7 +3,13 @@ import SubpageLayout from "@/components/SubpageLayout";
 
 export const metadata: Metadata = {
   title: "Vilkår for bruk",
-  description: "Vilkår for bruk av Sparlett.",
+  description: "Les vilkårene for bruk av Sparlett. Informasjon om dine rettigheter, ansvar, beta-vilkår og betingelser for tjenesten.",
+  alternates: { canonical: "https://sparlett.no/terms" },
+  openGraph: {
+    title: "Vilkår for bruk — Sparlett",
+    description: "Les vilkårene for bruk av Sparlett. Informasjon om dine rettigheter, ansvar, beta-vilkår og betingelser for tjenesten.",
+    url: "https://sparlett.no/terms",
+  },
 };
 
 export default function TermsPage() {

@@ -6,12 +6,31 @@ import Curve from "@/components/Curve";
 
 export const metadata: Metadata = {
   title: "Kom i gang",
-  description: "Søk om beta-tilgang til Sparlett og test gratis. Begrenset antall plasser.",
+  description: "Søk om beta-tilgang til Sparlett og test appen gratis. Begrenset antall plasser — beta-testere får 1 års gratis abonnement ved lansering.",
+  alternates: { canonical: "https://sparlett.no/beta" },
+  openGraph: {
+    title: "Kom i gang — Sparlett",
+    description: "Søk om beta-tilgang til Sparlett og test appen gratis. Begrenset antall plasser — beta-testere får 1 års gratis abonnement ved lansering.",
+    url: "https://sparlett.no/beta",
+  },
+};
+
+const betaJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Hjem", item: "https://sparlett.no" },
+    { "@type": "ListItem", position: 2, name: "Kom i gang", item: "https://sparlett.no/beta" },
+  ],
 };
 
 export default function BetaPage() {
   return (
     <SubpageLayout>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(betaJsonLd) }}
+      />
       <section className="py-20">
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-12 text-center">
@@ -49,7 +68,7 @@ export default function BetaPage() {
                     </svg>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-deep">{item.title}</h4>
+                    <h3 className="font-semibold text-deep">{item.title}</h3>
                     <p className="text-sm text-muted">{item.desc}</p>
                   </div>
                 </div>
